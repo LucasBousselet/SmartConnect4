@@ -37,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="ColumnButton.xaml">
+    <Page Include="Cell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -69,6 +72,8 @@
     </Compile>
     <Compile Include="ColumnButton.xaml.cs">
       <DependentUpon>ColumnButton.xaml</DependentUpon>
+    <Compile Include="Cell.xaml.cs">
+      <DependentUpon>Cell.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -101,6 +106,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ressources\EmptyCell.PNG" />
+    <Resource Include="Ressources\RedCell.PNG" />
+    <Resource Include="Ressources\YellowCell.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
