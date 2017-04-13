@@ -58,6 +58,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="ColumnButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Cell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -72,6 +75,7 @@
     </Compile>
     <Compile Include="ColumnButton.xaml.cs">
       <DependentUpon>ColumnButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cell.xaml.cs">
       <DependentUpon>Cell.xaml</DependentUpon>
     </Compile>
