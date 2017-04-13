@@ -6,14 +6,9 @@
         xmlns:local="clr-namespace:Connect4"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-<<<<<<< HEAD
     <Grid>
-        <local:ColumnButton x:Name="button0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <local:ColumnButton x:Name="button1" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top"/>
-=======
-    <Grid x:Name="_GameWindow">
-        
->>>>>>> e003b7cfd16cb9a43fa9617afbcfd999c8ddbde6
+        <local:ColumnButton x:Name="m_ColumnButton0" HorizontalAlignment="Left" Margin="84,71,0,0" VerticalAlignment="Top"/>
+        <Grid x:Name="m_GameWindow">
+        </Grid>
     </Grid>
-
 </Window>

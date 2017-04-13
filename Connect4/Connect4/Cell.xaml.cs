@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace Connect4
 {
@@ -23,24 +10,24 @@ namespace Connect4
         /// <summary>
         /// True if the cell is occupied by a red token
         /// </summary>
-        private bool isRed = new bool();
+        private bool m_IsRed = new bool();
 
         /// <summary>
         /// True if the cell is occupied by a yellow token
         /// </summary>
-        private bool isYellow = new bool();
+        private bool m_IsYellow = new bool();
 
         /// <summary>
         /// True if the cell unoccupied 
         /// </summary>
-        private bool isEmpty = new bool();
+        private bool m_IsEmpty = new bool();
 
         public Cell()
         {
             InitializeComponent();
-            isEmpty = true;
-            isRed = false;
-            isYellow = false;
+            m_IsEmpty = true;
+            m_IsRed = false;
+            m_IsYellow = false;
         }
 
         #region Getters / Setters
@@ -49,15 +36,12 @@ namespace Connect4
         {
             get
             {
-                return isRed;
+                return m_IsRed;
             }
             set
             {
-                isRed = value;
-                if (value == true)
-                {
-                    isEmpty = false;
-                }
+                m_IsRed = value;
+                m_IsEmpty = !value;
             }
         }
 
@@ -65,15 +49,12 @@ namespace Connect4
         {
             get
             {
-                return isYellow;
+                return m_IsYellow;
             }
             set
             {
-                isYellow = value;
-                if (value == true)
-                {
-                    isEmpty = false;
-                }
+                m_IsYellow = value;
+                m_IsEmpty = !value;
             }
         }
 
@@ -81,15 +62,15 @@ namespace Connect4
         {
             get
             {
-                return isEmpty;
+                return m_IsEmpty;
             }
             set
             {
-                isEmpty = value;
-                if (value == true)
+                m_IsEmpty = value;
+                if (value)
                 {
-                    isRed = false;
-                    isYellow = false;
+                    m_IsRed = !value;
+                    m_IsYellow = !value;
                 }
             }
         }
