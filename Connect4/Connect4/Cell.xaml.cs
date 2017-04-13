@@ -16,14 +16,23 @@ using System.Windows.Shapes;
 namespace Connect4
 {
     /// <summary>
-    /// Logique d'interaction pour Cell.xaml
+    /// The game is composed of a number of cells that contain either a yellow token, a red one or nothing
     /// </summary>
     public partial class Cell : UserControl
     {
+        /// <summary>
+        /// True if the cell is occupied by a red token
+        /// </summary>
         private bool isRed = new bool();
 
+        /// <summary>
+        /// True if the cell is occupied by a yellow token
+        /// </summary>
         private bool isYellow = new bool();
 
+        /// <summary>
+        /// True if the cell unoccupied 
+        /// </summary>
         private bool isEmpty = new bool();
 
         public Cell()
@@ -34,6 +43,8 @@ namespace Connect4
             isYellow = false;
         }
 
+        #region Getters / Setters
+
         public bool IsRed
         {
             get
@@ -43,6 +54,10 @@ namespace Connect4
             set
             {
                 isRed = value;
+                if (value == true)
+                {
+                    isEmpty = false;
+                }
             }
         }
 
@@ -55,6 +70,10 @@ namespace Connect4
             set
             {
                 isYellow = value;
+                if (value == true)
+                {
+                    isEmpty = false;
+                }
             }
         }
 
@@ -67,9 +86,14 @@ namespace Connect4
             set
             {
                 isEmpty = value;
-                isRed = false;
-                isYellow = false;
+                if (value == true)
+                {
+                    isRed = false;
+                    isYellow = false;
+                }
             }
         }
+
+        #endregion  
     }
 }
