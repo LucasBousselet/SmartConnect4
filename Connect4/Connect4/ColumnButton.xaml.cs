@@ -20,6 +20,23 @@ namespace Connect4
     /// </summary>
     public partial class ColumnButton : UserControl
     {
+        private int m_ColumnIndex = -1;
+
+        public int ColumnIndex
+        {
+            get
+            {
+                return m_ColumnIndex;
+            }
+            set
+            {
+                m_ColumnIndex = value;
+            }
+        }
+
+        public delegate void dlgOnButtonClicked(int p_ColumnIndex);
+        public static dlgOnButtonClicked OnButtonClicked;
+
         public ColumnButton()
         {
             InitializeComponent();
@@ -27,7 +44,7 @@ namespace Connect4
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-
+            OnButtonClicked(m_ColumnIndex);
         }
     }
 }

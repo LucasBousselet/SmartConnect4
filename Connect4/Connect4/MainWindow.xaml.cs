@@ -23,6 +23,17 @@ namespace Connect4
         public MainWindow()
         {
             InitializeComponent();
+
+            button0.ColumnIndex = 0;
+            button1.ColumnIndex = 1;
+
+            /* Architecture Delegate ColumnButton */
+            ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnButtonClicked);
+        }
+
+        public void OnButtonClicked(int p_ColumnIndex)
+        {
+            MessageBox.Show(p_ColumnIndex.ToString());
         }
     }
 }

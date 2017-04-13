@@ -58,7 +58,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="ColumnButton.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Cell.xaml">
@@ -115,6 +114,9 @@
     <Resource Include="Ressources\EmptyCell.PNG" />
     <Resource Include="Ressources\RedCell.PNG" />
     <Resource Include="Ressources\YellowCell.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ressources\PlayArrow.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

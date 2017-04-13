@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Connect4"
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="80">
-    <Grid Margin="0,0,76,75">
-        <Button x:Name="button" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="80" Click="button_Click" Margin="0,0,-76,-75"/>
-    </Grid>
+             d:DesignHeight="80" d:DesignWidth="100">
+
+    <Button x:Name="button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="80" Click="button_Click">
+        <Image Source="Ressources/PlayArrow.png"></Image>
+    </Button>
+
 </UserControl>
