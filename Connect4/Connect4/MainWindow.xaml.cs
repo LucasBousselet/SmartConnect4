@@ -25,12 +25,21 @@ namespace Connect4
 
             // Delegate for ColumnButton.onClick event.
             ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnButtonClicked);
+
+            HumanPlayer.OnColumnFull += new HumanPlayer.dlgOnColumnFull(OnColumnFull);
+            AIPlayer.OnColumnFull += new AIPlayer.dlgOnColumnFull(OnColumnFull);
         }
 
         public void OnButtonClicked(int p_ColumnIndex)
         {
             MessageBox.Show(p_ColumnIndex.ToString());
             ColumnButtonEnabled(false);
+        }
+
+        public void OnColumnFull(int p_ColumnIndex)
+        {
+            ColumnButtonList[p_ColumnIndex].IsEnabled = false;
+            ColumnButtonList.RemoveAt(p_ColumnIndex);
         }
 
         /// <summary>

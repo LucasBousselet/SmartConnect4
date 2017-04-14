@@ -13,12 +13,12 @@ namespace Connect4
         /// <summary>
         /// Number of lines in the Connect4 game board.
         /// </summary>
-        private int m_ColumnNumber = 7;
+        private int m_NomberOfColumns = 7;
 
         /// <summary>
         /// Number of columns in the Connect4 game board.
         /// </summary>
-        private int m_LineNumber = 6;
+        private int m_NumberOfLines = 6;
 
         /// <summary>
         /// Contains the 42 cells (6 x 7) that compose the board.
@@ -37,12 +37,20 @@ namespace Connect4
 
         public GameGrid()
         {
-            m_ArrayOfCells = new Cell[m_LineNumber, m_ColumnNumber];
+            m_ArrayOfCells = new Cell[m_NumberOfLines, m_NomberOfColumns];
             m_Score = 0;
             m_FourTokensAligned = false;
         }
 
         #region Getters / Setters
+
+        public int NumberOfLines
+        {
+            get
+            {
+                return m_NumberOfLines;
+            }
+        }
 
         public Cell[,] ArrayOfCells
         {
@@ -69,6 +77,18 @@ namespace Connect4
         }
 
         #endregion
+
+        public int GetNextPossibleLine(int p_ColumnPlayed)
+        {
+            for (int i = 0; i < m_NumberOfLines; i++)
+            {
+                if(m_ArrayOfCells[i, p_ColumnPlayed].IsEmpty)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
 
         public int CalculateGridScore()
         {
