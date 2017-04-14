@@ -6,9 +6,4 @@
         xmlns:local="clr-namespace:Connect4"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <local:ColumnButton x:Name="m_ColumnButton0" HorizontalAlignment="Left" Margin="84,71,0,0" VerticalAlignment="Top"/>
-        <Grid x:Name="m_GameWindow">
-        </Grid>
-    </Grid>
 </Window>
