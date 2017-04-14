@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,6 +12,10 @@ namespace Connect4
     {
         private Grid m_Connect4GUI = new Grid();
 
+        private Grid m_WindowGrid = new Grid();
+
+        private GameGrid m_MatrixOfCells = new GameGrid();
+
         private List<ColumnButton> ColumnButtonList = new List<ColumnButton>();
 
         public MainWindow()
@@ -19,7 +24,7 @@ namespace Connect4
 
             InitializeGameWindow();
 
-            //Content = m_GameWindow;
+            Content = m_WindowGrid;
 
             AddColumnButtonToList();
 
@@ -51,13 +56,21 @@ namespace Connect4
         {
             // Creation of the rows and columns of the _WindowGrid
             RowDefinition windowRow1 = new RowDefinition();
+            RowDefinition windowRow2 = new RowDefinition();
             windowRow1.Height = GridLength.Auto;
-            m_GameWindow.RowDefinitions.Add(windowRow1);
+            windowRow2.Height = GridLength.Auto;
+            m_WindowGrid.RowDefinitions.Add(windowRow1);
             ColumnDefinition windowColumn1 = new ColumnDefinition();
             ColumnDefinition WindowColumn2 = new ColumnDefinition();
-            m_GameWindow.ColumnDefinitions.Add(windowColumn1);
-            m_GameWindow.ColumnDefinitions.Add(WindowColumn2);
+            m_WindowGrid.ColumnDefinitions.Add(windowColumn1);
+            m_WindowGrid.ColumnDefinitions.Add(WindowColumn2);
 
+            InitializeConnect4Grid();
+
+        }
+
+        private void InitializeConnect4Grid()
+        {
             // Creates the 6 rows of the connect 4, and adds them to the grid
             RowDefinition connect4Row1 = new RowDefinition();
             RowDefinition connect4Row2 = new RowDefinition();
@@ -90,13 +103,12 @@ namespace Connect4
             // Sets Connect4 grid into the left _GameGrid cell 
             Grid.SetRow(m_Connect4GUI, 1);
             Grid.SetColumn(m_Connect4GUI, 0);
-            m_GameWindow.Children.Add(m_Connect4GUI);
+            m_WindowGrid.Children.Add(m_Connect4GUI);
         }
-
         private void AddColumnButtonToList()
         {
             
-            ColumnButtonList.Add(m_ColumnButton0);
+         //   ColumnButtonList.Add(m_ColumnButton0);
             /*
             ColumnButtonList.Add(m_ColumnButton1);
             ColumnButtonList.Add(m_ColumnButton2);
@@ -120,45 +132,28 @@ namespace Connect4
             }
         }
 
-        /*    /// <summary>
+            /// <summary>
             /// Populates every cell of the Connect4 with a instance of Cell
             /// Every cell is placed in a list, with a number ranging from 0 to 8   0 (first row 0 -> 8, second row 9 -> 17, etc ...)
             /// </summary>
-            private void PopulateSudokuGridWithCell()
+            private void PopulateConnect4GridWithCell()
             {
                 try
                 {
-                    _ListOfCells.Clear();
-                    // Adds 80 cells to the list of existing cells
-                    for (int i = 0; i <= 80; i++)
+                for (int i = 0; i < m_MatrixOfCells.NumberOfLines; i++)
+                {
+                    for (int j = 0; j < m_MatrixOfCells.NumberOfColumns; j++)
                     {
-                        SudokuCell OneCell = new SudokuCell();
-                        _ListOfCells.Add(OneCell);
+                        // Adds a Cell in the Connect4 Grid(i,j)
+                        Grid.SetRow(m_MatrixOfCells.ArrayOfCells[i, j], i);
+                        Grid.SetColumn(m_MatrixOfCells.ArrayOfCells[i, j], j);
+                        m_Connect4GUI.Children.Add(m_MatrixOfCells.ArrayOfCells[i, j]);
                     }
-
-                    /* Creates a UserControl "SudokuCell" in each cell of the game
-                     * We increment k to address a different index to each cell
-
-                    int k = 0;
-                    // Goes through the 9 rows
-                    for (int i = 0; i < 9; i++)
-                    {
-                        // Goes through the 9 columns
-                        for (int j = 0; j < 9; j++)
-                        {
-                            // Adds a Sudokucell in the GridCell (i,j)
-                            Grid.SetRow(_ListOfCells[k], i);
-                            Grid.SetColumn(_ListOfCells[k], j);
-                            _SudokuGrid.Children.Add(_ListOfCells[k]);
-
-                            k++;
-                        }
-                    }
+                }
                 }
                 catch (Exception ex)
                 {
-                    Trace.Write(ex.Message);
                 }
-            }*/
+            }
     }
 }

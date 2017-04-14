@@ -52,6 +52,13 @@ namespace Connect4
             }
         }
 
+        public int NumberOfColumns
+        {
+            get
+            {
+                return m_NomberOfColumns;
+            }
+        }
         public Cell[,] ArrayOfCells
         {
             get
