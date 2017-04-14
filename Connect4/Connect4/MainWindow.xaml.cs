@@ -26,8 +26,8 @@ namespace Connect4
             // Delegate for ColumnButton.onClick event.
             ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnButtonClicked);
 
-            HumanPlayer.OnColumnFull += new HumanPlayer.dlgOnColumnFull(OnColumnFull);
-            AIPlayer.OnColumnFull += new AIPlayer.dlgOnColumnFull(OnColumnFull);
+            //HumanPlayer.OnColumnFull += new HumanPlayer.dlgOnColumnFull(OnColumnFull);
+            //AIPlayer.OnColumnFull += new AIPlayer.dlgOnColumnFull(OnColumnFull);
         }
 
         public void OnButtonClicked(int p_ColumnIndex)

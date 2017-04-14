@@ -94,9 +94,21 @@ namespace Connect4
         public delegate void dlgOnColumnFull(int p_ColumnIndex);
         public static dlgOnColumnFull OnColumnFull;
 
-        public void AddTokenToGrid()
+        public void AddTokenToGrid(Object p_Player, int p_ColumnPlayed)
         {
+            int LinePlayed = GetNextPossibleLine(p_ColumnPlayed);
 
+            if (p_Player is HumanPlayer)
+            {
+                ArrayOfCells[LinePlayed, p_ColumnPlayed].IsYellow = true;
+            }
+            else
+            {
+                if (p_Player is AIPlayer)
+                {
+                    ArrayOfCells[LinePlayed, p_ColumnPlayed].IsRed = true;
+                }
+            }
         }
 
         public int GetNextPossibleLine(int p_ColumnPlayed)

@@ -6,7 +6,7 @@ namespace Connect4
     /// <summary>
     /// Interaction logic for ColumnButton.xaml
     /// </summary>
-    public partial class ColumnButton : UserControl
+    partial class ColumnButton : UserControl
     {
         private int m_ColumnIndex = new int();
 
