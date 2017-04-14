@@ -30,6 +30,14 @@ namespace Connect4
             m_IsYellow = false;
         }
 
+        public Cell(Cell ClonedCell)
+        {
+            InitializeComponent();
+            m_IsEmpty = ClonedCell.m_IsEmpty;
+            m_IsRed = ClonedCell.m_IsRed;
+            m_IsYellow = ClonedCell.m_IsYellow;
+        }
+
         #region Getters / Setters
 
         public bool IsRed

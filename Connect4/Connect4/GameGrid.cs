@@ -35,11 +35,24 @@ namespace Connect4
         /// </summary>
         private bool m_FourTokensAligned = new bool();
 
+        /// <summary>
+        /// A list containing the index of the full columns.
+        /// </summary>
+        private List<int> m_ColumnFullIndex = new List<int>();
+
         public GameGrid()
         {
-            m_ArrayOfCells = new Cell[m_NumberOfLines, m_NomberOfColumns];
             m_Score = 0;
             m_FourTokensAligned = false;
+            m_ArrayOfCells = new Cell[m_NumberOfLines, m_NomberOfColumns];
+
+            for (int i = 0; i < m_NumberOfLines; i++)
+            {
+                for (int j = 0; j < m_NomberOfColumns; j++)
+                {
+                    m_ArrayOfCells[i, j] = new Cell();
+                }
+            }
         }
 
         #region Getters / Setters
@@ -78,16 +91,39 @@ namespace Connect4
 
         #endregion
 
+        public delegate void dlgOnColumnFull(int p_ColumnIndex);
+        public static dlgOnColumnFull OnColumnFull;
+
+        public void AddTokenToGrid()
+        {
+
+        }
+
         public int GetNextPossibleLine(int p_ColumnPlayed)
         {
             for (int i = 0; i < m_NumberOfLines; i++)
             {
-                if(m_ArrayOfCells[i, p_ColumnPlayed].IsEmpty)
+                if (m_ArrayOfCells[i, p_ColumnPlayed].IsEmpty)
                 {
                     return i;
                 }
             }
             return -1;
+        }
+
+        public GameGrid CloneGameGrid(GameGrid GridToClone)
+        {
+            GameGrid ClonedGrid = new GameGrid();
+
+            for (int i = 0; i < m_NumberOfLines; i++)
+            {
+                for (int j = 0; j < m_NomberOfColumns; j++)
+                {
+                    ClonedGrid.m_ArrayOfCells[i, j] = new Cell(GridToClone.m_ArrayOfCells[i, j]);
+                }
+            }
+
+            return ClonedGrid;
         }
 
         public int CalculateGridScore()
