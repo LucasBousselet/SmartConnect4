@@ -2,10 +2,13 @@
 {
     class AIPlayer : Connect4Player
     {
-
-        public override void Play(GameGrid p_GameGrid, int p_ColumnPlayed)
+        /// <summary>
+        /// Create a new AI player with his token color.
+        /// </summary>
+        /// <param name="p_TokenColor"> The color of the token for the player. </param>
+        public AIPlayer(string p_TokenColor) : base(p_TokenColor)
         {
-            p_GameGrid.ArrayOfCells[p_GameGrid.GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsRed = true;
+            m_TokenColor = p_TokenColor;
         }
 
     }

@@ -40,6 +40,9 @@ namespace Connect4
         /// </summary>
         private List<int> m_ColumnFullIndex = new List<int>();
 
+        /// <summary>
+        /// Create a new Gamegrid with 42 empty cells.
+        /// </summary>
         public GameGrid()
         {
             m_Score = 0;
@@ -57,6 +60,9 @@ namespace Connect4
 
         #region Getters / Setters
 
+        /// <summary>
+        /// Get the number of lines of the board.
+        /// </summary>
         public int NumberOfLines
         {
             get
@@ -65,6 +71,9 @@ namespace Connect4
             }
         }
 
+        /// <summary>
+        /// Get the number fo columns of the board.
+        /// </summary>
         public int NumberOfColumns
         {
             get
@@ -72,6 +81,10 @@ namespace Connect4
                 return m_NomberOfColumns;
             }
         }
+
+        /// <summary>
+        /// Get the matrix which composes the game board.
+        /// </summary>
         public Cell[,] ArrayOfCells
         {
             get
@@ -80,6 +93,9 @@ namespace Connect4
             }
         }
 
+        /// <summary>
+        /// Get the grid score.
+        /// </summary>
         public int Score
         {
             get
@@ -88,6 +104,9 @@ namespace Connect4
             }
         }
 
+        /// <summary>
+        /// Boolean that indicates if there are 4 token aligned in the board.
+        /// </summary>
         public bool FourTokenAligned
         {
             get
@@ -101,6 +120,25 @@ namespace Connect4
         public delegate void dlgOnColumnFull(int p_ColumnIndex);
         public static dlgOnColumnFull OnColumnFull;
 
+        public void AddTockenInColumn(int p_ColumnPlayed, string p_TokenColor)
+        {
+            if (p_TokenColor.Equals("Red"))
+            {
+                ArrayOfCells[GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsRed = true;
+            }
+            else {
+                if (p_TokenColor.Equals("Yellow"))
+                {
+                    ArrayOfCells[GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsYellow = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the next free cell
+        /// </summary>
+        /// <param name="p_ColumnPlayed"></param>
+        /// <returns></returns>
         public int GetNextPossibleLine(int p_ColumnPlayed)
         {
             for (int i = 0; i < m_NumberOfLines; i++)

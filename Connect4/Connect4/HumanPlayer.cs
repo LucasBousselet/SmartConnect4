@@ -1,24 +1,17 @@
 ﻿namespace Connect4
 {
+    /// <summary>
+    /// Class used to create a new human player.
+    /// </summary>
     class HumanPlayer : Connect4Player
     {
-        private bool m_HasPlayed = new bool();
-
-        bool HasPlayed
+        /// <summary>
+        /// Create a new human player with his token color.
+        /// </summary>
+        /// <param name="p_TokenColor"> The color of the token for the player. </param>
+        public HumanPlayer(string p_TokenColor) : base(p_TokenColor)
         {
-            get
-            {
-                return m_HasPlayed;
-            }
-            set
-            {
-                m_HasPlayed = value;
-            }
-        }
-
-        public override void Play(GameGrid p_GameGrid, int p_ColumnPlayed)
-        {
-            p_GameGrid.ArrayOfCells[p_GameGrid.GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsYellow = true;
+            m_TokenColor = p_TokenColor;
         }
     }
 }

@@ -33,6 +33,13 @@ namespace Connect4
 
             //HumanPlayer.OnColumnFull += new HumanPlayer.dlgOnColumnFull(OnColumnFull);
             //AIPlayer.OnColumnFull += new AIPlayer.dlgOnColumnFull(OnColumnFull);
+
+            Connect4Player player1 = new HumanPlayer("Yellow");
+            Connect4Player player2 = new AIPlayer("Red");
+
+            player1.Play(m_MatrixOfCells, 0);
+            player2.Play(m_MatrixOfCells, 0);
+
         }
 
         public void OnButtonClicked(int p_ColumnIndex)
