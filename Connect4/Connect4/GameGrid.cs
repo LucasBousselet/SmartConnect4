@@ -101,11 +101,6 @@ namespace Connect4
         public delegate void dlgOnColumnFull(int p_ColumnIndex);
         public static dlgOnColumnFull OnColumnFull;
 
-        public void AddTokenToGrid()
-        {
-
-        }
-
         public int GetNextPossibleLine(int p_ColumnPlayed)
         {
             for (int i = 0; i < m_NumberOfLines; i++)

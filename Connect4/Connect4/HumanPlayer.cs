@@ -1,10 +1,10 @@
 ﻿namespace Connect4
 {
-    class HumanPlayer
+    class HumanPlayer : Connect4Player
     {
         private bool m_HasPlayed = new bool();
 
-        public bool HasPlayed
+        bool HasPlayed
         {
             get
             {
@@ -16,16 +16,9 @@
             }
         }
 
-        public void Play(GameGrid p_GameGrid, int p_ColumnPlayed)
+        public override void Play(GameGrid p_GameGrid, int p_ColumnPlayed)
         {
-            int LinePlayed = p_GameGrid.GetNextPossibleLine(p_ColumnPlayed);
-
-            p_GameGrid.ArrayOfCells[LinePlayed, p_ColumnPlayed].IsYellow = true;
-
-            if (LinePlayed == p_GameGrid.NumberOfLines - 1)
-            {
-                
-            }
+            p_GameGrid.ArrayOfCells[p_GameGrid.GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsYellow = true;
         }
     }
 }

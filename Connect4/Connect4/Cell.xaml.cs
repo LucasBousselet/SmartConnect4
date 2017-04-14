@@ -5,7 +5,7 @@ namespace Connect4
     /// <summary>
     /// The game is composed of a number of cells that contain either a yellow token, a red one or nothing
     /// </summary>
-    public partial class Cell : UserControl
+    partial class Cell : UserControl
     {
         /// <summary>
         /// True if the cell is occupied by a red token
