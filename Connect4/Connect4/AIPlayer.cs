@@ -1,5 +1,8 @@
 ﻿namespace Connect4
 {
+    /// <summary>
+    /// Class used to create an AI player.
+    /// </summary>
     class AIPlayer : Connect4Player
     {
         /// <summary>

@@ -3,25 +3,28 @@
 namespace Connect4
 {
     /// <summary>
-    /// The game is composed of a number of cells that contain either a yellow token, a red one or nothing
+    /// The game is composed of a number of cells that contain either a yellow token, a red one or nothing.
     /// </summary>
     partial class Cell : UserControl
     {
         /// <summary>
-        /// True if the cell is occupied by a red token
+        /// True if the cell is occupied by a red token.
         /// </summary>
         private bool m_IsRed = new bool();
 
         /// <summary>
-        /// True if the cell is occupied by a yellow token
+        /// True if the cell is occupied by a yellow token.
         /// </summary>
         private bool m_IsYellow = new bool();
 
         /// <summary>
-        /// True if the cell unoccupied 
+        /// True if the cell unoccupied. 
         /// </summary>
         private bool m_IsEmpty = new bool();
 
+        /// <summary>
+        /// Default constructor for a cell.
+        /// </summary>
         public Cell()
         {
             InitializeComponent();
@@ -30,6 +33,10 @@ namespace Connect4
             m_IsYellow = false;
         }
 
+        /// <summary>
+        /// Conctructeur used to create the duplicate of a given cell.
+        /// </summary>
+        /// <param name="ClonedCell"> The cell to duplicate. </param>
         public Cell(Cell ClonedCell)
         {
             InitializeComponent();
@@ -40,6 +47,9 @@ namespace Connect4
 
         #region Getters / Setters
 
+        /// <summary>
+        /// Get / set if the cell contains a red token.
+        /// </summary>
         public bool IsRed
         {
             get
@@ -53,6 +63,9 @@ namespace Connect4
             }
         }
 
+        /// <summary>
+        /// Get / set if the cell contains a yellow token.
+        /// </summary>
         public bool IsYellow
         {
             get
@@ -66,6 +79,9 @@ namespace Connect4
             }
         }
 
+        /// <summary>
+        /// Get / set if the cell is empty.
+        /// </summary>
         public bool IsEmpty
         {
             get

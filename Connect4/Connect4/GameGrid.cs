@@ -120,13 +120,19 @@ namespace Connect4
         public delegate void dlgOnColumnFull(int p_ColumnIndex);
         public static dlgOnColumnFull OnColumnFull;
 
+        /// <summary>
+        /// Add a token in the next free cell in a column.
+        /// </summary>
+        /// <param name="p_ColumnPlayed"> The column to consider. </param>
+        /// <param name="p_TokenColor"> The color of the token to add. </param>
         public void AddTockenInColumn(int p_ColumnPlayed, string p_TokenColor)
         {
             if (p_TokenColor.Equals("Red"))
             {
                 ArrayOfCells[GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsRed = true;
             }
-            else {
+            else
+            {
                 if (p_TokenColor.Equals("Yellow"))
                 {
                     ArrayOfCells[GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsYellow = true;
@@ -135,10 +141,10 @@ namespace Connect4
         }
 
         /// <summary>
-        /// Get the next free cell
+        /// Get the next free cell in a given column.
         /// </summary>
-        /// <param name="p_ColumnPlayed"></param>
-        /// <returns></returns>
+        /// <param name="p_ColumnPlayed"> The column to consider. </param>
+        /// <returns> The next free cell in a given column. </returns>
         public int GetNextPossibleLine(int p_ColumnPlayed)
         {
             for (int i = 0; i < m_NumberOfLines; i++)
@@ -151,6 +157,11 @@ namespace Connect4
             return -1;
         }
 
+        /// <summary>
+        /// Create a duplicate of a given board.
+        /// </summary>
+        /// <param name="GridToClone"> The board to clone. </param>
+        /// <returns> The duplicate of the given board. </returns>
         public GameGrid CloneGameGrid(GameGrid GridToClone)
         {
             GameGrid ClonedGrid = new GameGrid();
@@ -166,9 +177,18 @@ namespace Connect4
             return ClonedGrid;
         }
 
-        public int CalculateGridScore()
+        /// <summary>
+        /// Calculate the score of a given board.
+        /// </summary>
+        /// <returns> The score for a given board. </returns>
+        public int CalculateGridScore(Connect4Player p_PlayerToConsider)
         {
-            return CalculateLinesScore() + CalculateColumnsScore() + CalculateUpperRightDiagonalsScore() + CalculateUpperLeftDiagonalsScore();
+            string tokenColor = p_PlayerToConsider.TokenColor;
+
+            return CalculateLinesScore(tokenColor) +
+                CalculateColumnsScore(tokenColor) +
+                CalculateUpperRightDiagonalsScore(tokenColor) +
+                CalculateUpperLeftDiagonalsScore(tokenColor);
         }
 
         /// <summary>
@@ -178,13 +198,14 @@ namespace Connect4
         /// and in each set we calculate the score according to the following rules :
         /// - if there are both yellow and red tokens in the line, it's not a winning line, we give a score of 0.
         /// - if there are no tocken in the line, it's not a winning line, we give a score of 0.
-        /// - if there are only red tokens, we might be able to win in this line, we give 1 point for 1 token in the line,
-        ///   10 points for 2 tokens, 100 points for 3 tokens and 1000 points for 4 tokens.
-        /// - if there are only yellow tokens, we might loose in this line, we give -1 point for 1 token in the line,
+        /// - if there are only "p_ColorToConsider" tokens, we might be able to win in this line,
+        ///   we give 1 point for 1 token in the line, 10 points for 2 tokens, 100 points for 3 tokens
+        ///   and 1000 points for 4 tokens.
+        /// - if there are only the other color, we might loose in this line, we give -1 point for 1 token in the line,
         ///   -10 points for 2 tokens, -100 points for 3 tokens and -1000 points for 4 tokens.
         /// </summary>
         /// <returns> The score for the board lines, computed as explained above. </returns>
-        public int CalculateLinesScore()
+        public int CalculateLinesScore(string p_ColorToConsider)
         {
             int linesScore = 0;
 
@@ -215,7 +236,14 @@ namespace Connect4
                     }
                     else
                     {
-                        lineScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                        if (p_ColorToConsider.Equals("Red"))
+                        {
+                            lineScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                        }
+                        else if (p_ColorToConsider.Equals("Yellow"))
+                        {
+                            lineScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                        }
                     }
 
                     if (lineScore == 1000 || lineScore == -1000)
@@ -234,7 +262,7 @@ namespace Connect4
         /// Compute the score for the board columns like CalculateLinesScore() does for lines.
         /// </summary>
         /// <returns> The score for the board columns. </returns>
-        public int CalculateColumnsScore()
+        public int CalculateColumnsScore(string p_ColorToConsider)
         {
             int columnsScore = 0;
 
@@ -265,7 +293,14 @@ namespace Connect4
                     }
                     else
                     {
-                        columnScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                        if (p_ColorToConsider.Equals("Red"))
+                        {
+                            columnScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                        }
+                        else if (p_ColorToConsider.Equals("Yellow"))
+                        {
+                            columnScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                        }
                     }
 
                     if (columnScore == 1000 || columnScore == -1000)
@@ -284,7 +319,7 @@ namespace Connect4
         /// Compute the score for the board upper right diagonals like CalculateLinesScore() does for lines.
         /// </summary>
         /// <returns> The score for the board upper right diagonals. </returns>
-        public int CalculateUpperRightDiagonalsScore()
+        public int CalculateUpperRightDiagonalsScore(string p_ColorToConsider)
         {
             int upperRightDiagonalsScore = 0;
 
@@ -315,7 +350,14 @@ namespace Connect4
                     }
                     else
                     {
-                        upperRightDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                        if (p_ColorToConsider.Equals("Red"))
+                        {
+                            upperRightDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                        }
+                        else if (p_ColorToConsider.Equals("Yellow"))
+                        {
+                            upperRightDiagonalScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                        }
                     }
 
                     if (upperRightDiagonalScore == 1000 || upperRightDiagonalScore == -1000)
@@ -334,7 +376,7 @@ namespace Connect4
         /// Compute the score for the board upper left diagonals like CalculateLinesScore() does for lines.
         /// </summary>
         /// <returns> The score for the board upper left diagonals. </returns>
-        public int CalculateUpperLeftDiagonalsScore()
+        public int CalculateUpperLeftDiagonalsScore(string p_ColorToConsider)
         {
             int upperLeftDiagonalsScore = 0;
 
@@ -349,11 +391,11 @@ namespace Connect4
 
                     for (int k = 0; k < 4; k++)
                     {
-                        if (m_ArrayOfCells[i - k, j - k].IsRed)
+                        if (m_ArrayOfCells[i - k, j + k].IsRed)
                         {
                             redCount++;
                         }
-                        if (m_ArrayOfCells[i - k, j - k].IsYellow)
+                        if (m_ArrayOfCells[i - k, j + k].IsYellow)
                         {
                             yellowCount++;
                         }
@@ -365,7 +407,14 @@ namespace Connect4
                     }
                     else
                     {
-                        upperLeftDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                        if (p_ColorToConsider.Equals("Red"))
+                        {
+                            upperLeftDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                        }
+                        else if (p_ColorToConsider.Equals("Yellow"))
+                        {
+                            upperLeftDiagonalScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                        }
                     }
 
                     if (upperLeftDiagonalScore == 1000 || upperLeftDiagonalScore == -1000)
