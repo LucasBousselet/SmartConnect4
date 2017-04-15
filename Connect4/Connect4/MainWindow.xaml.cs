@@ -50,17 +50,14 @@ namespace Connect4
             ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
             GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
 
-            //HumanPlayer.OnColumnFull += new HumanPlayer.dlgOnColumnFull(OnColumnFull);
-            //AIPlayer.OnColumnFull += new AIPlayer.dlgOnColumnFull(OnColumnFull);
-
             Connect4Player player1 = new HumanPlayer("Yellow");
             Connect4Player player2 = new AIPlayer("Red");
 
-           /* player1.Play(m_MatrixOfCells, 0);
-            player2.Play(m_MatrixOfCells, 0);
-            player1.Play(m_MatrixOfCells, 5);
-            player1.Play(m_MatrixOfCells, 6);
-            player1.Play(m_MatrixOfCells, 6);*/
+            /* player1.Play(m_MatrixOfCells, 0);
+             player2.Play(m_MatrixOfCells, 0);
+             player1.Play(m_MatrixOfCells, 5);
+             player1.Play(m_MatrixOfCells, 6);
+             player1.Play(m_MatrixOfCells, 6);*/
 
             int a = m_MatrixOfCells.CalculateGridScore(player1);
 
@@ -212,12 +209,12 @@ namespace Connect4
         {
             Connect4Player player1 = new HumanPlayer("Yellow");
             player1.Play(m_MatrixOfCells, p_ColumnIndex);
-       //     UpdateGUI();
+            //     UpdateGUI();
 
-         //   System.Threading.Thread.Sleep(2000);
+            //   System.Threading.Thread.Sleep(2000);
 
-         //   Connect4Player player2 = new AIPlayer("Red");
-         //   player2.Play(m_MatrixOfCells, 0);
+            //   Connect4Player player2 = new AIPlayer("Red");
+            //   player2.Play(m_MatrixOfCells, 0);
         }
 
         #region Events
@@ -228,7 +225,7 @@ namespace Connect4
         /// <param name="p_ColumnIndex"> The column index used to locate the ColumnButton. </param>
         public void OnColumnButtonClicked(int p_ColumnIndex)
         {
-        //    MessageBox.Show(p_ColumnIndex.ToString());
+            // MessageBox.Show(p_ColumnIndex.ToString());
             // ColumnButtonEnabled(false);
             Connect4GameLoop(p_ColumnIndex);
         }
@@ -239,11 +236,11 @@ namespace Connect4
         /// <param name="p_ColumnIndex"> The index of the full column. </param>
         public void OnColumnFull(int p_ColumnIndex)
         {
-            ColumnButtonList[p_ColumnIndex].IsEnabled = false;
             for (int i = 0; i < ColumnButtonList.Count; i++)
             {
                 if (ColumnButtonList[i].ColumnIndex == p_ColumnIndex)
                 {
+                    ColumnButtonList[i].IsEnabled = false;
                     ColumnButtonList.Remove(ColumnButtonList[i]);
                 }
             }
