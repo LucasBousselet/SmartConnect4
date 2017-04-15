@@ -9,5 +9,7 @@ namespace Connect4
     class MinimaxAlgorithm
     {
 
+
+
     }
 }

@@ -38,7 +38,7 @@ namespace Connect4
         /// <summary>
         /// A list containing the index of the full columns.
         /// </summary>
-        private List<int> m_ColumnFullIndex = new List<int>();
+        private List<int> m_ColumnNotFull = new List<int>() { 0, 1, 2, 3, 4, 5, 6 };
 
         /// <summary>
         /// Create a new Gamegrid with 42 empty cells.
@@ -115,6 +115,14 @@ namespace Connect4
             }
         }
 
+        public List<int> ColumnNotFull
+        {
+            get
+            {
+                return m_ColumnNotFull;
+            }
+        }
+
         #endregion
 
         public delegate void dlgOnColumnFull(int p_ColumnIndex);
@@ -141,6 +149,7 @@ namespace Connect4
             if (GetNextPossibleLine(p_ColumnPlayed) == m_NumberOfLines - 1)
             {
                 OnColumnFull(p_ColumnPlayed);
+                m_ColumnNotFull.Remove(p_ColumnPlayed);
             }
         }
 
