@@ -239,11 +239,11 @@ namespace Connect4
         /// <param name="p_ColumnIndex"> The index of the full column. </param>
         public void OnColumnFull(int p_ColumnIndex)
         {
-            ColumnButtonList[p_ColumnIndex].IsEnabled = false;
             for (int i = 0; i < ColumnButtonList.Count; i++)
             {
                 if (ColumnButtonList[i].ColumnIndex == p_ColumnIndex)
                 {
+                    ColumnButtonList[i].IsEnabled = false;
                     ColumnButtonList.Remove(ColumnButtonList[i]);
                 }
             }
