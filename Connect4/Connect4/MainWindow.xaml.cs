@@ -48,6 +48,7 @@ namespace Connect4
 
             // Delegate for ColumnButton.onClick event.
             ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
+            GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
 
             //HumanPlayer.OnColumnFull += new HumanPlayer.dlgOnColumnFull(OnColumnFull);
             //AIPlayer.OnColumnFull += new AIPlayer.dlgOnColumnFull(OnColumnFull);
@@ -55,11 +56,11 @@ namespace Connect4
             Connect4Player player1 = new HumanPlayer("Yellow");
             Connect4Player player2 = new AIPlayer("Red");
 
-            player1.Play(m_MatrixOfCells, 0);
+           /* player1.Play(m_MatrixOfCells, 0);
             player2.Play(m_MatrixOfCells, 0);
             player1.Play(m_MatrixOfCells, 5);
             player1.Play(m_MatrixOfCells, 6);
-            player1.Play(m_MatrixOfCells, 6);
+            player1.Play(m_MatrixOfCells, 6);*/
 
             int a = m_MatrixOfCells.CalculateGridScore(player1);
 
@@ -138,12 +139,19 @@ namespace Connect4
             try
             {
                 // We start at i = 1 because we leave one empty row to place our buttons.
-                for (int i = m_MatrixOfCells.NumberOfLines; i >= 1; i--)
+                /*  for (int i = m_MatrixOfCells.NumberOfLines; i >= 1; i--)
+                  {
+                      for (int j = 0; j < m_MatrixOfCells.NumberOfColumns; j++)
+                      {
+                          // Adds a Cell in the Connect4 Grid(i,j).
+                             Grid.SetRow(m_MatrixOfCells.ArrayOfCells[i - 1, j], i);
+                             Grid.SetColumn(m_MatrixOfCells.ArrayOfCells[i - 1, j], j);
+                             m_Connect4GUI.Children.Add(m_MatrixOfCells.ArrayOfCells[i - 1, j]);*/
+                for (int i = 1; i < m_MatrixOfCells.NumberOfLines; i++)
                 {
                     for (int j = 0; j < m_MatrixOfCells.NumberOfColumns; j++)
                     {
-                        // Adds a Cell in the Connect4 Grid(i,j).
-                        Grid.SetRow(m_MatrixOfCells.ArrayOfCells[i - 1, j], i);
+                        Grid.SetRow(m_MatrixOfCells.ArrayOfCells[i - 1, j], m_MatrixOfCells.NumberOfLines - i);
                         Grid.SetColumn(m_MatrixOfCells.ArrayOfCells[i - 1, j], j);
                         m_Connect4GUI.Children.Add(m_MatrixOfCells.ArrayOfCells[i - 1, j]);
                     }
@@ -183,6 +191,11 @@ namespace Connect4
             }
         }
 
+        private void UpdateGUI()
+        {
+            Content = m_WindowGrid;
+        }
+
         /// <summary>
         /// Method used to enabe ou disable a ColumnButton.
         /// </summary>
@@ -195,6 +208,18 @@ namespace Connect4
             }
         }
 
+        private void Connect4GameLoop(int p_ColumnIndex)
+        {
+            Connect4Player player1 = new HumanPlayer("Yellow");
+            player1.Play(m_MatrixOfCells, p_ColumnIndex);
+       //     UpdateGUI();
+
+         //   System.Threading.Thread.Sleep(2000);
+
+         //   Connect4Player player2 = new AIPlayer("Red");
+         //   player2.Play(m_MatrixOfCells, 0);
+        }
+
         #region Events
 
         /// <summary>
@@ -203,8 +228,9 @@ namespace Connect4
         /// <param name="p_ColumnIndex"> The column index used to locate the ColumnButton. </param>
         public void OnColumnButtonClicked(int p_ColumnIndex)
         {
-            MessageBox.Show(p_ColumnIndex.ToString());
-            ColumnButtonEnabled(false);
+        //    MessageBox.Show(p_ColumnIndex.ToString());
+            // ColumnButtonEnabled(false);
+            Connect4GameLoop(p_ColumnIndex);
         }
 
         /// <summary>
@@ -214,7 +240,13 @@ namespace Connect4
         public void OnColumnFull(int p_ColumnIndex)
         {
             ColumnButtonList[p_ColumnIndex].IsEnabled = false;
-            ColumnButtonList.RemoveAt(p_ColumnIndex);
+            for (int i = 0; i < ColumnButtonList.Count; i++)
+            {
+                if (ColumnButtonList[i].ColumnIndex == p_ColumnIndex)
+                {
+                    ColumnButtonList.Remove(ColumnButtonList[i]);
+                }
+            }
         }
 
         #endregion

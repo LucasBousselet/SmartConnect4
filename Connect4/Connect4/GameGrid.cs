@@ -138,6 +138,10 @@ namespace Connect4
                     ArrayOfCells[GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsYellow = true;
                 }
             }
+            if (GetNextPossibleLine(p_ColumnPlayed) == m_NumberOfLines - 1)
+            {
+                OnColumnFull(p_ColumnPlayed);
+            }
         }
 
         /// <summary>

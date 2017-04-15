@@ -16,7 +16,7 @@
             </Grid.ColumnDefinitions>
 
             <Viewbox Stretch="Uniform" >
-                <Image Source="Ressources/EmptyCell.png"></Image>
+                <Image x:Name="cellImage" Source="Ressources/EmptyCell.png"></Image>
             </Viewbox>
         </Grid>
     </Border>

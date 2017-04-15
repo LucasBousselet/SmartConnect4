@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace Connect4
 {
@@ -59,6 +61,8 @@ namespace Connect4
             set
             {
                 m_IsRed = value;
+                BitmapImage image = new BitmapImage(new Uri("Ressources/RedCell.png", UriKind.Relative));
+                cellImage.Source = image;
                 m_IsEmpty = !value;
             }
         }
@@ -75,6 +79,8 @@ namespace Connect4
             set
             {
                 m_IsYellow = value;
+                BitmapImage image = new BitmapImage(new Uri("Ressources/YellowCell.png", UriKind.Relative));
+                cellImage.Source = image;
                 m_IsEmpty = !value;
             }
         }
@@ -94,6 +100,8 @@ namespace Connect4
                 if (value)
                 {
                     m_IsRed = !value;
+                    BitmapImage image = new BitmapImage(new Uri("Ressources/EmptyCell.png", UriKind.Relative));
+                    cellImage.Source = image;
                     m_IsYellow = !value;
                 }
             }
