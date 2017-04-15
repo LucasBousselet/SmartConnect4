@@ -56,7 +56,7 @@
         /// <param name="p_ColumnPlayed"> The column he plays in. </param>
         public void Play(GameGrid p_GameGrid, int p_ColumnPlayed)
         {
-            p_GameGrid.AddTockenInColumn(p_ColumnPlayed, m_TokenColor);
+            p_GameGrid.AddTokenInColumn(p_ColumnPlayed, m_TokenColor);
         }
     }
 }

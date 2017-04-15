@@ -133,7 +133,7 @@ namespace Connect4
         /// </summary>
         /// <param name="p_ColumnPlayed"> The column to consider. </param>
         /// <param name="p_TokenColor"> The color of the token to add. </param>
-        public void AddTockenInColumn(int p_ColumnPlayed, string p_TokenColor)
+        public void AddTokenInColumn(int p_ColumnPlayed, string p_TokenColor)
         {
             if (p_TokenColor.Equals("Red"))
             {

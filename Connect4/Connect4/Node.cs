@@ -1,22 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Connect4
+﻿namespace Connect4
 {
     class Node
     {
-        String m_WhoseTurnItIs = String.Empty;
+        Connect4Player m_WhoseTurnItIs = null;
 
         GameGrid m_Grid;
 
         int m_Depth = -1;
 
-        public Node(String p_PlayerColor, GameGrid p_Grid, int m_depth)
+        public Connect4Player WhoseTurnItIs
         {
-            m_WhoseTurnItIs = p_PlayerColor;
+            get
+            {
+                return m_WhoseTurnItIs;
+            }
+        }
+
+        public GameGrid Grid
+        {
+            get
+            {
+                return m_Grid;
+            }
+        }
+
+        public int Depth
+        {
+            get
+            {
+                return m_Depth;
+            }
+        }
+
+        public Node(Connect4Player p_WhoseTurnItIs, GameGrid p_Grid, int m_depth)
+        {
+            m_WhoseTurnItIs = p_WhoseTurnItIs;
             m_Grid = p_Grid;
             m_Depth = m_depth;
         }
