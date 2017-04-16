@@ -26,7 +26,7 @@ namespace Connect4
         /// The MainWindow possesses this matrix of 42 cells, it is used to reach every
         /// cell we need, and each one is associated in a case of the GUI grid for display purpose.
         /// </summary>
-        private GameGrid m_MatrixOfCells = new GameGrid();
+        private Connect4Game m_Connect4Game = new Connect4Game();
 
         /// <summary>
         /// In order to select a column in which we should insert a token, this list contains
@@ -47,22 +47,7 @@ namespace Connect4
             Content = m_WindowGrid;
 
             // Delegate for ColumnButton.onClick event.
-            ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
             GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
-
-            Connect4Player player1 = new HumanPlayer("Yellow");
-            Connect4Player player2 = new AIPlayer("Red");
-
-            /* player1.Play(m_MatrixOfCells, 0);
-             player2.Play(m_MatrixOfCells, 0);
-             player1.Play(m_MatrixOfCells, 5);
-             player1.Play(m_MatrixOfCells, 6);
-             player1.Play(m_MatrixOfCells, 6);*/
-
-            int a = m_MatrixOfCells.CalculateGridScore(player1);
-
-            int b = 0;
-            b++;
         }
 
         /// <summary>
@@ -144,13 +129,13 @@ namespace Connect4
                              Grid.SetRow(m_MatrixOfCells.ArrayOfCells[i - 1, j], i);
                              Grid.SetColumn(m_MatrixOfCells.ArrayOfCells[i - 1, j], j);
                              m_Connect4GUI.Children.Add(m_MatrixOfCells.ArrayOfCells[i - 1, j]);*/
-                for (int i = 1; i < m_MatrixOfCells.NumberOfLines; i++)
+                for (int i = 1; i < m_Connect4Game.MatrixOfCells.NumberOfLines; i++)
                 {
-                    for (int j = 0; j < m_MatrixOfCells.NumberOfColumns; j++)
+                    for (int j = 0; j < m_Connect4Game.MatrixOfCells.NumberOfColumns; j++)
                     {
-                        Grid.SetRow(m_MatrixOfCells.ArrayOfCells[i - 1, j], m_MatrixOfCells.NumberOfLines - i);
-                        Grid.SetColumn(m_MatrixOfCells.ArrayOfCells[i - 1, j], j);
-                        m_Connect4GUI.Children.Add(m_MatrixOfCells.ArrayOfCells[i - 1, j]);
+                        Grid.SetRow(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j], m_Connect4Game.MatrixOfCells.NumberOfLines - i);
+                        Grid.SetColumn(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j], j);
+                        m_Connect4GUI.Children.Add(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j]);
                     }
                 }
             }
@@ -168,7 +153,7 @@ namespace Connect4
         {
             try
             {
-                for (int i = 0; i < m_MatrixOfCells.NumberOfColumns; i++)
+                for (int i = 0; i < m_Connect4Game.MatrixOfCells.NumberOfColumns; i++)
                 {
                     ColumnButton button = new ColumnButton();
                     button.ColumnIndex = i;
@@ -205,30 +190,7 @@ namespace Connect4
             }
         }
 
-        private void Connect4GameLoop(int p_ColumnIndex)
-        {
-            Connect4Player player1 = new HumanPlayer("Yellow");
-            player1.Play(m_MatrixOfCells, p_ColumnIndex);
-            //     UpdateGUI();
-
-            //   System.Threading.Thread.Sleep(2000);
-
-            //   Connect4Player player2 = new AIPlayer("Red");
-            //   player2.Play(m_MatrixOfCells, 0);
-        }
-
         #region Events
-
-        /// <summary>
-        /// Event triggerend when we click on a ColumnButton.
-        /// </summary>
-        /// <param name="p_ColumnIndex"> The column index used to locate the ColumnButton. </param>
-        public void OnColumnButtonClicked(int p_ColumnIndex)
-        {
-            // MessageBox.Show(p_ColumnIndex.ToString());
-            // ColumnButtonEnabled(false);
-            Connect4GameLoop(p_ColumnIndex);
-        }
 
         /// <summary>
         /// Event triggered when a column is full to avoid anyone to play in it.
