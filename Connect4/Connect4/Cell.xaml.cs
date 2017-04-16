@@ -36,7 +36,7 @@ namespace Connect4
         }
 
         /// <summary>
-        /// Conctructeur used to create the duplicate of a given cell.
+        /// Constructor used to create the duplicate of a given cell.
         /// </summary>
         /// <param name="ClonedCell"> The cell to duplicate. </param>
         public Cell(Cell ClonedCell)

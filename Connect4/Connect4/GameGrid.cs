@@ -125,8 +125,8 @@ namespace Connect4
 
         #endregion
 
-        public delegate void dlgOnColumnFull(int p_ColumnIndex);
-        public static dlgOnColumnFull OnColumnFull;
+        //public delegate void dlgOnColumnFull(int p_ColumnIndex);
+        //public static dlgOnColumnFull OnColumnFull;
 
         /// <summary>
         /// Add a token in the next free cell in a column.
@@ -150,7 +150,7 @@ namespace Connect4
             }
             if (nextPossibleLine == m_NumberOfLines - 1)
             {
-                OnColumnFull(p_ColumnPlayed);
+                //OnColumnFull(p_ColumnPlayed);
                 m_ColumnNotFull.Remove(p_ColumnPlayed);
             }
         }
@@ -180,6 +180,7 @@ namespace Connect4
         public GameGrid CloneGameGrid(GameGrid GridToClone)
         {
             GameGrid ClonedGrid = new GameGrid();
+            ClonedGrid.m_ColumnNotFull.Clear();
 
             for (int i = 0; i < m_NumberOfLines; i++)
             {
@@ -187,6 +188,11 @@ namespace Connect4
                 {
                     ClonedGrid.m_ArrayOfCells[i, j] = new Cell(GridToClone.m_ArrayOfCells[i, j]);
                 }
+            }
+
+            for (int i = 0; i < GridToClone.ColumnNotFull.Count; i++)
+            {
+                ClonedGrid.m_ColumnNotFull.Add(GridToClone.ColumnNotFull[i]);
             }
 
             return ClonedGrid;

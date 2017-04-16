@@ -43,18 +43,13 @@ namespace Connect4
         {
             m_Player1 = new HumanPlayer("Yellow");
             m_Player2 = new AIPlayer("Red", m_Player1, 2);
-
-          //  MainWindow.OnSetupFinished += new MainWindow.dlgOnSetupFinished(Connect4GameLoop);
         }
 
         public void Connect4GameLoop(int p_ColumnIndex)
         {
             m_Player1.Play(MatrixOfCells, p_ColumnIndex);
-            //m_Player2.Play(MatrixOfCells);
+            m_Player2.Play(MatrixOfCells);
         }
-
-        public delegate void dlgOnHumanPlayer(bool p_Enable);
-        public static dlgOnHumanPlayer OnHumanPlayer;
 
 
      /*   public void Connect4GameLoop()

@@ -47,7 +47,7 @@ namespace Connect4
             UpdateGUI();
 
             // Delegate for ColumnButton.onClick event.
-            GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
+            //Connect4Player.OnColumnFull += new Connect4Player.dlgOnColumnFull(OnColumnFull);
             ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
         }
 
