@@ -59,5 +59,10 @@
             p_GameGrid.AddTokenInColumn(p_ColumnPlayed, m_TokenColor);
             HasPlayed = true;
         }
+
+        public virtual void Play(GameGrid p_GameGrid)
+        {
+
+        }
     }
 }

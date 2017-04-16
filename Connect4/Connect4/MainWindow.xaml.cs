@@ -48,7 +48,8 @@ namespace Connect4
 
             // Delegate for ColumnButton.onClick event.
             GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
-            Connect4Game.OnHumanPlayer += new Connect4Game.dlgOnHumanPlayer(ColumnButtonEnabled);
+            //Connect4Game.OnHumanPlayer += new Connect4Game.dlgOnHumanPlayer(ColumnButtonEnabled);
+            ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
             /*
             Action testAction = async () =>
             {
@@ -218,7 +219,7 @@ namespace Connect4
         {
             // MessageBox.Show(p_ColumnIndex.ToString());
             ColumnButtonEnabled(false);
-            //m_Connect4Game.Connect4GameLoop(p_ColumnIndex);
+            m_Connect4Game.Connect4GameLoop(p_ColumnIndex);
         }
 
         /// <summary>
@@ -238,6 +239,5 @@ namespace Connect4
         }
 
         #endregion
-
     }
 }
