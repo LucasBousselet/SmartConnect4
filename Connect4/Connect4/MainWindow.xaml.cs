@@ -44,11 +44,12 @@ namespace Connect4
 
             PopulateConnect4WithColumnButtons();
             PopulateConnect4GridWithCell();
-            Content = m_WindowGrid;
+            UpdateGUI();
 
             // Delegate for ColumnButton.onClick event.
             GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
-            ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
+
+            m_Connect4Game.Connect4GameLoop();
         }
 
         /// <summary>
