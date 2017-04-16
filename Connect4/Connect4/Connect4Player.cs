@@ -50,7 +50,7 @@
         }
 
         /// <summary>
-        /// The method used fo a player to add a token in a given column.
+        /// The method used for a player to add a token in a given column.
         /// </summary>
         /// <param name="p_GameGrid"> The board he plays in. </param>
         /// <param name="p_ColumnPlayed"> The column he plays in. </param>

@@ -48,12 +48,8 @@ namespace Connect4
 
             // Delegate for ColumnButton.onClick event.
             GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
-            //Connect4Game.OnHumanPlayer += new Connect4Game.dlgOnHumanPlayer(ColumnButtonEnabled);
-
+            ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
         }
-        /*
-        public delegate void dlgOnSetupFinished();
-        public static dlgOnSetupFinished OnSetupFinished;*/
 
         /// <summary>
         /// Initializes a Grid (GameWindow) that will contain two columns and one row :
@@ -134,11 +130,11 @@ namespace Connect4
                              Grid.SetRow(m_MatrixOfCells.ArrayOfCells[i - 1, j], i);
                              Grid.SetColumn(m_MatrixOfCells.ArrayOfCells[i - 1, j], j);
                              m_Connect4GUI.Children.Add(m_MatrixOfCells.ArrayOfCells[i - 1, j]);*/
-                for (int i = 1; i < m_Connect4Game.MatrixOfCells.NumberOfLines; i++)
+                for (int i = 1; i <= m_Connect4Game.MatrixOfCells.NumberOfLines; i++)
                 {
                     for (int j = 0; j < m_Connect4Game.MatrixOfCells.NumberOfColumns; j++)
                     {
-                        Grid.SetRow(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j], m_Connect4Game.MatrixOfCells.NumberOfLines - i);
+                        Grid.SetRow(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j], m_Connect4Game.MatrixOfCells.NumberOfLines - i + 1);
                         Grid.SetColumn(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j], j);
                         m_Connect4GUI.Children.Add(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j]);
                     }
@@ -206,6 +202,7 @@ namespace Connect4
             // MessageBox.Show(p_ColumnIndex.ToString());
             ColumnButtonEnabled(false);
             m_Connect4Game.Connect4GameLoop(p_ColumnIndex);
+            ColumnButtonEnabled(true);
         }
 
         /// <summary>
