@@ -135,18 +135,20 @@ namespace Connect4
         /// <param name="p_TokenColor"> The color of the token to add. </param>
         public void AddTokenInColumn(int p_ColumnPlayed, string p_TokenColor)
         {
+            int nextPossibleLine = GetNextPossibleLine(p_ColumnPlayed);
+
             if (p_TokenColor.Equals("Red"))
             {
-                ArrayOfCells[GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsRed = true;
+                ArrayOfCells[nextPossibleLine, p_ColumnPlayed].IsRed = true;
             }
             else
             {
                 if (p_TokenColor.Equals("Yellow"))
                 {
-                    ArrayOfCells[GetNextPossibleLine(p_ColumnPlayed), p_ColumnPlayed].IsYellow = true;
+                    ArrayOfCells[nextPossibleLine, p_ColumnPlayed].IsYellow = true;
                 }
             }
-            if (GetNextPossibleLine(p_ColumnPlayed) == m_NumberOfLines - 1)
+            if (nextPossibleLine == m_NumberOfLines - 1)
             {
                 OnColumnFull(p_ColumnPlayed);
                 m_ColumnNotFull.Remove(p_ColumnPlayed);
