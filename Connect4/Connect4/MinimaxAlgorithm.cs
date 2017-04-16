@@ -20,7 +20,7 @@
                     {
                         GameGrid newGameGrid = p_Node.Grid.CloneGameGrid(p_Node.Grid);
                         p_Player.Play(newGameGrid, column);
-                        Node newNode = new Node(p_Opponent, newGameGrid, p_Node.Depth + 1);
+                        Node newNode = new Node(p_Opponent, newGameGrid, column, p_Node.Depth + 1);
                         Node currentNode = Minimax(newNode, p_MaxDepth, p_Player, p_Opponent);
 
                         if (nodeWithScoreMax == null)
@@ -43,7 +43,7 @@
                     {
                         GameGrid newGameGrid = p_Node.Grid.CloneGameGrid(p_Node.Grid);
                         p_Opponent.Play(newGameGrid, column);
-                        Node newNode = new Node(p_Player, newGameGrid, p_Node.Depth + 1);
+                        Node newNode = new Node(p_Player, newGameGrid, column, p_Node.Depth + 1);
                         Node currentNode = Minimax(newNode, p_MaxDepth, p_Player, p_Opponent);
 
                         if (nodeWithScoreMin == null)
