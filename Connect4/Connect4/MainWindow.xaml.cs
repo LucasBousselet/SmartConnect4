@@ -48,6 +48,7 @@ namespace Connect4
 
             // Delegate for ColumnButton.onClick event.
             GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
+            ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
         }
 
         /// <summary>
@@ -191,6 +192,17 @@ namespace Connect4
         }
 
         #region Events
+
+        /// <summary>
+        /// Event triggerend when we click on a ColumnButton.
+        /// </summary>
+        /// <param name="p_ColumnIndex"> The column index used to locate the ColumnButton. </param>
+        public void OnColumnButtonClicked(int p_ColumnIndex)
+        {
+            // MessageBox.Show(p_ColumnIndex.ToString());
+            ColumnButtonEnabled(false);
+            m_Connect4Game.Connect4GameLoop(p_ColumnIndex);
+        }
 
         /// <summary>
         /// Event triggered when a column is full to avoid anyone to play in it.

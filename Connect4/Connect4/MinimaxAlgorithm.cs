@@ -1,8 +1,8 @@
 ﻿namespace Connect4
 {
-    class MinimaxAlgorithm
+    static class MinimaxAlgorithm
     {
-        public Node Minimax(Node p_Node, int p_MaxDepth, Connect4Player p_Player, Connect4Player p_Opponent)
+        public static Node Minimax(Node p_Node, int p_MaxDepth, Connect4Player p_Player, Connect4Player p_Opponent)
         {
             if (p_Node.Grid.FourTokenAligned || p_Node.Depth == p_MaxDepth)
             {
@@ -19,7 +19,7 @@
                     foreach (int column in p_Node.Grid.ColumnNotFull)
                     {
                         GameGrid newGameGrid = p_Node.Grid.CloneGameGrid(p_Node.Grid);
-                        p_Player.Play(newGameGrid, column);
+                        newGameGrid.AddTokenInColumn(column, p_Player.TokenColor);
                         Node newNode = new Node(p_Opponent, newGameGrid, p_Node.Depth + 1);
                         Node currentNode = Minimax(newNode, p_MaxDepth, p_Player, p_Opponent);
 
@@ -42,7 +42,7 @@
                     foreach (int column in p_Node.Grid.ColumnNotFull)
                     {
                         GameGrid newGameGrid = p_Node.Grid.CloneGameGrid(p_Node.Grid);
-                        p_Opponent.Play(newGameGrid, column);
+                        newGameGrid.AddTokenInColumn(column, p_Opponent.TokenColor);
                         Node newNode = new Node(p_Player, newGameGrid, p_Node.Depth + 1);
                         Node currentNode = Minimax(newNode, p_MaxDepth, p_Player, p_Opponent);
 

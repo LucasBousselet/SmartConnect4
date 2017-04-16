@@ -6,7 +6,7 @@
 
         GameGrid m_Grid;
 
-        int m_Depth = -1;
+        int m_Depth = new int();
 
         public Connect4Player WhoseTurnItIs
         {
