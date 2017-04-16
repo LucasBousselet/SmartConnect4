@@ -28,9 +28,9 @@ namespace Connect4
         /// </summary>
         private Connect4Game m_Connect4Game = new Connect4Game();
 
-        /// <summary>
         /// In order to select a column in which we should insert a token, this list contains
-        /// 7 buttons, one will be displayed above the each column.
+        /// 7 buttons, one will be displayed above
+        /// <summary> the each column.
         /// </summary>
         private List<ColumnButton> ColumnButtonList = new List<ColumnButton>();
 
@@ -48,25 +48,12 @@ namespace Connect4
 
             // Delegate for ColumnButton.onClick event.
             GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
-            Connect4Game.OnHumanPlayer += new Connect4Game.dlgOnHumanPlayer(ColumnButtonEnabled);
-            /*
-            Action testAction = async () =>
-            {
-                OnSetupFinished();
-            };
-            testAction.Invoke();
-            
+            //Connect4Game.OnHumanPlayer += new Connect4Game.dlgOnHumanPlayer(ColumnButtonEnabled);
 
-
-
-            int a = 0;
-            a++;*/
         }
-
-        //void OnSomeEvent() => Task.Run(() => SomeEvent?.Invoke(this, new SomeEventArgs(i)));
-
+        /*
         public delegate void dlgOnSetupFinished();
-        public static dlgOnSetupFinished OnSetupFinished;
+        public static dlgOnSetupFinished OnSetupFinished;*/
 
         /// <summary>
         /// Initializes a Grid (GameWindow) that will contain two columns and one row :

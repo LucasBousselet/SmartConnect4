@@ -24,7 +24,7 @@
                 return m_TokenColor;
             }
         }
-    
+
         /// <summary>
         /// Get / set if the Connect4Player has played is turn.
         /// </summary>
@@ -58,6 +58,11 @@
         {
             p_GameGrid.AddTokenInColumn(p_ColumnPlayed, m_TokenColor);
             HasPlayed = true;
+        }
+
+        public virtual void Play(GameGrid p_GameGrid)
+        {
+
         }
     }
 }

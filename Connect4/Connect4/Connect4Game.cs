@@ -45,7 +45,7 @@ namespace Connect4
             m_Player1 = new HumanPlayer("Yellow");
             m_Player2 = new AIPlayer("Red", m_Player1, 4);
 
-            MainWindow.OnSetupFinished += new MainWindow.dlgOnSetupFinished(Connect4GameLoop);
+            //MainWindow.OnSetupFinished += new MainWindow.dlgOnSetupFinished(Connect4GameLoop);
         }
 
         public void Connect4GameLoop(int p_ColumnIndex)
