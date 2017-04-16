@@ -54,10 +54,10 @@
         /// </summary>
         /// <param name="p_GameGrid"> The board he plays in. </param>
         /// <param name="p_ColumnPlayed"> The column he plays in. </param>
-        public virtual void Play(GameGrid p_GameGrid, int p_ColumnPlayed)
+        public void Play(GameGrid p_GameGrid, int p_ColumnPlayed)
         {
             p_GameGrid.AddTokenInColumn(p_ColumnPlayed, m_TokenColor);
-            this.HasPlayed = true;
+            HasPlayed = true;
         }
     }
 }

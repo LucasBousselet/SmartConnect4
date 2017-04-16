@@ -20,12 +20,12 @@
             m_DepthMinimax = p_DepthMinimax;
         }
 
-        public override void Play(GameGrid p_GameGrid, int p_ColumnPlayed)
+        public void Play(GameGrid p_GameGrid)
         {
-            Node startingNode = new Node(this, p_GameGrid, m_DepthMinimax);
+            Node startingNode = new Node(this, p_GameGrid, -1, 0);
             Node nodeToPlay = MinimaxAlgorithm.Minimax(startingNode, m_DepthMinimax, this, m_Opponent);
 
-            base.Play(p_GameGrid, p_ColumnPlayed);
+            Play(p_GameGrid, nodeToPlay.TokenAddedInColumn);
         }
 
     }

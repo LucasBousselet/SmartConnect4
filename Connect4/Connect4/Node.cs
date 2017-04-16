@@ -46,6 +46,14 @@
             }
         }
 
+        public int TokenAddedInColumn
+        {
+            get
+            {
+                return m_TokenAddedInColumn;
+            }
+        }
+
         public Node(Connect4Player p_WhoseTurnItIs, GameGrid p_Grid, int p_ColumnPlayed, int m_depth)
         {
             m_WhoseTurnItIs = p_WhoseTurnItIs;

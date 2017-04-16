@@ -48,9 +48,25 @@ namespace Connect4
 
             // Delegate for ColumnButton.onClick event.
             GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
+            Connect4Game.OnHumanPlayer += new Connect4Game.dlgOnHumanPlayer(ColumnButtonEnabled);
+            /*
+            Action testAction = async () =>
+            {
+                OnSetupFinished();
+            };
+            testAction.Invoke();
+            
 
-            m_Connect4Game.Connect4GameLoop();
+
+
+            int a = 0;
+            a++;*/
         }
+
+        //void OnSomeEvent() => Task.Run(() => SomeEvent?.Invoke(this, new SomeEventArgs(i)));
+
+        public delegate void dlgOnSetupFinished();
+        public static dlgOnSetupFinished OnSetupFinished;
 
         /// <summary>
         /// Initializes a Grid (GameWindow) that will contain two columns and one row :
@@ -202,7 +218,7 @@ namespace Connect4
         {
             // MessageBox.Show(p_ColumnIndex.ToString());
             ColumnButtonEnabled(false);
-            m_Connect4Game.Connect4GameLoop(p_ColumnIndex);
+            //m_Connect4Game.Connect4GameLoop(p_ColumnIndex);
         }
 
         /// <summary>

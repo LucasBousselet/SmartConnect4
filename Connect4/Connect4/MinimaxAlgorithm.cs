@@ -19,7 +19,7 @@
                     foreach (int column in p_Node.Grid.ColumnNotFull)
                     {
                         GameGrid newGameGrid = p_Node.Grid.CloneGameGrid(p_Node.Grid);
-                        p_Player.Play(newGameGrid, column);
+                        newGameGrid.AddTokenInColumn(column, p_Player.TokenColor);
                         Node newNode = new Node(p_Opponent, newGameGrid, column, p_Node.Depth + 1);
                         Node currentNode = Minimax(newNode, p_MaxDepth, p_Player, p_Opponent);
 
@@ -42,7 +42,7 @@
                     foreach (int column in p_Node.Grid.ColumnNotFull)
                     {
                         GameGrid newGameGrid = p_Node.Grid.CloneGameGrid(p_Node.Grid);
-                        p_Opponent.Play(newGameGrid, column);
+                        newGameGrid.AddTokenInColumn(column, p_Opponent.TokenColor);
                         Node newNode = new Node(p_Player, newGameGrid, column, p_Node.Depth + 1);
                         Node currentNode = Minimax(newNode, p_MaxDepth, p_Player, p_Opponent);
 
