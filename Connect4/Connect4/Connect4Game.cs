@@ -14,7 +14,6 @@ namespace Connect4
         private Connect4Player m_Winner;
         private GameGrid m_MatrixOfCells = new GameGrid();
 
-        // ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
 
         public Connect4Player PlayerYellow
         {
@@ -45,20 +44,20 @@ namespace Connect4
             m_Player1 = new HumanPlayer("Yellow");
             m_Player2 = new AIPlayer("Red", m_Player1, 4);
 
-            //MainWindow.OnSetupFinished += new MainWindow.dlgOnSetupFinished(Connect4GameLoop);
+          //  MainWindow.OnSetupFinished += new MainWindow.dlgOnSetupFinished(Connect4GameLoop);
         }
 
         public void Connect4GameLoop(int p_ColumnIndex)
         {
-            // MessageBox.Show(p_ColumnIndex.ToString());
-            // ColumnButtonEnabled(false);
-            // Connect4GameLoop();
+            m_Player1.Play(MatrixOfCells, p_ColumnIndex);
+            m_Player2.Play(MatrixOfCells);
         }
 
         public delegate void dlgOnHumanPlayer(bool p_Enable);
         public static dlgOnHumanPlayer OnHumanPlayer;
 
-        public void Connect4GameLoop()
+
+     /*   public void Connect4GameLoop()
         {
             while (!MatrixOfCells.FourTokenAligned)
             {
@@ -90,7 +89,7 @@ namespace Connect4
             // System.Threading.Thread.Sleep(2000);
 
             // Connect4Player player2 = new AIPlayer("Red");
-            // player2.Play(m_MatrixOfCells, 0);*/
-        }
+            // player2.Play(m_MatrixOfCells, 0);
+        }*/
     }
 }

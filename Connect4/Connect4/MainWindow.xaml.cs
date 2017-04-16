@@ -205,7 +205,7 @@ namespace Connect4
         {
             // MessageBox.Show(p_ColumnIndex.ToString());
             ColumnButtonEnabled(false);
-            //m_Connect4Game.Connect4GameLoop(p_ColumnIndex);
+            m_Connect4Game.Connect4GameLoop(p_ColumnIndex);
         }
 
         /// <summary>
@@ -225,6 +225,5 @@ namespace Connect4
         }
 
         #endregion
-
     }
 }
