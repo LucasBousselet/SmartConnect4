@@ -51,8 +51,8 @@ namespace Connect4
             m_Player2.Play(MatrixOfCells);
         }
 
-
-     /*   public void Connect4GameLoop()
+        /*
+        public void Connect4GameLoop()
         {
             while (!MatrixOfCells.FourTokenAligned)
             {
@@ -77,14 +77,15 @@ namespace Connect4
 
             }
             MessageBox.Show("Player " + m_Winner.TokenColor + " won the game, how fun !");
-            /* Connect4Player player1 = new HumanPlayer("Yellow");
-             player1.Play(m_MatrixOfCells, p_ColumnIndex);
-             //     UpdateGUI();
+            Connect4Player player1 = new HumanPlayer("Yellow");
+            player1.Play(m_MatrixOfCells, p_ColumnIndex);
+            // UpdateGUI();
 
             // System.Threading.Thread.Sleep(2000);
 
             // Connect4Player player2 = new AIPlayer("Red");
             // player2.Play(m_MatrixOfCells, 0);
-        }*/
+        }
+        */
     }
 }
