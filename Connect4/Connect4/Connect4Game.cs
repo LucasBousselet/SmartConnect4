@@ -42,7 +42,7 @@ namespace Connect4
         public Connect4Game()
         {
             m_Player1 = new HumanPlayer("Yellow");
-            m_Player2 = new AIPlayer("Red", m_Player1, 2);
+            m_Player2 = new AIPlayer("Red", m_Player1, 4);
         }
 
         public void Connect4GameLoop(int p_ColumnIndex)
