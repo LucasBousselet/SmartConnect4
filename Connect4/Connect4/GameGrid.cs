@@ -202,11 +202,11 @@ namespace Connect4
         /// Calculate the score of a given board.
         /// </summary>
         /// <returns> The score for a given board. </returns>
-        public int CalculateGridScore(Connect4Player p_PlayerToConsider)
+        public void CalculateGridScore(Connect4Player p_PlayerToConsider)
         {
             string tokenColor = p_PlayerToConsider.TokenColor;
 
-            return CalculateLinesScore(tokenColor) +
+            m_Score = CalculateLinesScore(tokenColor) +
                 CalculateColumnsScore(tokenColor) +
                 CalculateUpperRightDiagonalsScore(tokenColor) +
                 CalculateUpperLeftDiagonalsScore(tokenColor);
@@ -259,11 +259,39 @@ namespace Connect4
                     {
                         if (p_ColorToConsider.Equals("Red"))
                         {
-                            lineScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                            if (redCount == 4)
+                            {
+                                lineScore = 10000;
+                            }
+                            else
+                            {
+                                if (yellowCount == 4)
+                                {
+                                    lineScore = -10000;
+                                }
+                                else
+                                {
+                                    lineScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                                }
+                            }
                         }
                         else if (p_ColorToConsider.Equals("Yellow"))
                         {
-                            lineScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                            if (redCount == 4)
+                            {
+                                lineScore = -10000;
+                            }
+                            else
+                            {
+                                if (yellowCount == 4)
+                                {
+                                    lineScore = 10000;
+                                }
+                                else
+                                {
+                                    lineScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                                }
+                            }
                         }
                     }
 
@@ -271,9 +299,9 @@ namespace Connect4
                     {
                         m_FourTokensAligned = true;
                     }
-                }
 
-                linesScore += lineScore;
+                    linesScore += lineScore;
+                }
             }
 
             return linesScore;
@@ -316,11 +344,39 @@ namespace Connect4
                     {
                         if (p_ColorToConsider.Equals("Red"))
                         {
-                            columnScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                            if (redCount == 4)
+                            {
+                                columnScore = 10000;
+                            }
+                            else
+                            {
+                                if (yellowCount == 4)
+                                {
+                                    columnScore = -10000;
+                                }
+                                else
+                                {
+                                    columnScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                                }
+                            }
                         }
                         else if (p_ColorToConsider.Equals("Yellow"))
                         {
-                            columnScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                            if (redCount == 4)
+                            {
+                                columnScore = -10000;
+                            }
+                            else
+                            {
+                                if (yellowCount == 4)
+                                {
+                                    columnScore = 10000;
+                                }
+                                else
+                                {
+                                    columnScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                                }
+                            }
                         }
                     }
 
@@ -328,9 +384,9 @@ namespace Connect4
                     {
                         m_FourTokensAligned = true;
                     }
-                }
 
-                columnsScore += columnScore;
+                    columnsScore += columnScore;
+                }
             }
 
             return columnsScore;
@@ -373,11 +429,39 @@ namespace Connect4
                     {
                         if (p_ColorToConsider.Equals("Red"))
                         {
-                            upperRightDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                            if (redCount == 4)
+                            {
+                                upperRightDiagonalScore = 10000;
+                            }
+                            else
+                            {
+                                if (yellowCount == 4)
+                                {
+                                    upperRightDiagonalScore = -10000;
+                                }
+                                else
+                                {
+                                    upperRightDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                                }
+                            }
                         }
                         else if (p_ColorToConsider.Equals("Yellow"))
                         {
-                            upperRightDiagonalScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                            if (redCount == 4)
+                            {
+                                upperRightDiagonalScore = -10000;
+                            }
+                            else
+                            {
+                                if (yellowCount == 4)
+                                {
+                                    upperRightDiagonalScore = 10000;
+                                }
+                                else
+                                {
+                                    upperRightDiagonalScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                                }
+                            }
                         }
                     }
 
@@ -385,9 +469,9 @@ namespace Connect4
                     {
                         m_FourTokensAligned = true;
                     }
-                }
 
-                upperRightDiagonalsScore += upperRightDiagonalScore;
+                    upperRightDiagonalsScore += upperRightDiagonalScore;
+                }
             }
 
             return upperRightDiagonalsScore;
@@ -430,11 +514,39 @@ namespace Connect4
                     {
                         if (p_ColorToConsider.Equals("Red"))
                         {
-                            upperLeftDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                            if (redCount == 4)
+                            {
+                                upperLeftDiagonalScore = 10000;
+                            }
+                            else
+                            {
+                                if (yellowCount == 4)
+                                {
+                                    upperLeftDiagonalScore = -10000;
+                                }
+                                else
+                                {
+                                    upperLeftDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
+                                }
+                            }
                         }
                         else if (p_ColorToConsider.Equals("Yellow"))
                         {
-                            upperLeftDiagonalScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                            if (redCount == 4)
+                            {
+                                upperLeftDiagonalScore = -10000;
+                            }
+                            else
+                            {
+                                if (yellowCount == 4)
+                                {
+                                    upperLeftDiagonalScore = 10000;
+                                }
+                                else
+                                {
+                                    upperLeftDiagonalScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
+                                }
+                            }
                         }
                     }
 
@@ -442,9 +554,9 @@ namespace Connect4
                     {
                         m_FourTokensAligned = true;
                     }
-                }
 
-                upperLeftDiagonalsScore += upperLeftDiagonalScore;
+                    upperLeftDiagonalsScore += upperLeftDiagonalScore;
+                }
             }
 
             return upperLeftDiagonalsScore;

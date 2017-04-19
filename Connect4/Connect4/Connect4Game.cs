@@ -42,14 +42,23 @@ namespace Connect4
         public Connect4Game()
         {
             m_Player1 = new HumanPlayer("Yellow");
-            m_Player2 = new AIPlayer("Red", m_Player1, 4);
+            m_Player2 = new AIPlayer("Red", m_Player1, 2);
+            /*
+            m_Player1.Play(m_MatrixOfCells, 2);
+            m_Player1.Play(m_MatrixOfCells, 3);
+            m_Player1.Play(m_MatrixOfCells, 4);
+            */
         }
 
         public void Connect4GameLoop(int p_ColumnIndex)
         {
             m_Player1.Play(MatrixOfCells, p_ColumnIndex);
+            OnHumanPlayerPlayed();
             m_Player2.Play(MatrixOfCells);
         }
+
+        public delegate void dlgOnHumanPlayerPlayed();
+        public static dlgOnHumanPlayerPlayed OnHumanPlayerPlayed;
 
         /*
         public void Connect4GameLoop()

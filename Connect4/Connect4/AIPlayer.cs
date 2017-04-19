@@ -23,7 +23,7 @@
         public override void Play(GameGrid p_GameGrid)
         {
             Node startingNode = new Node(this, p_GameGrid, -1, 0);
-            Node nodeToPlay = MinimaxAlgorithm.Minimax(startingNode, m_DepthMinimax, this, m_Opponent);
+            Node nodeToPlay = MinimaxAlgorithm.Minimax(startingNode, m_DepthMinimax, int.MinValue, int.MaxValue, this, m_Opponent);
 
             Play(p_GameGrid, nodeToPlay.TokenAddedInColumn);
         }

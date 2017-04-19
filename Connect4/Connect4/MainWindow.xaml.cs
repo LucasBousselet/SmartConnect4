@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace Connect4
 {
@@ -44,11 +45,12 @@ namespace Connect4
 
             PopulateConnect4WithColumnButtons();
             PopulateConnect4GridWithCell();
-            UpdateGUI();
+            Content = m_WindowGrid;
 
             // Delegate for ColumnButton.onClick event.
             //Connect4Player.OnColumnFull += new Connect4Player.dlgOnColumnFull(OnColumnFull);
             ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
+            Connect4Game.OnHumanPlayerPlayed += new Connect4Game.dlgOnHumanPlayerPlayed(UpdateGUI);
         }
 
         /// <summary>
@@ -174,9 +176,9 @@ namespace Connect4
             }
         }
 
-        private void UpdateGUI()
+        public void UpdateGUI()
         {
-            Content = m_WindowGrid;
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { })).Wait();
         }
 
         /// <summary>
