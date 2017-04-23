@@ -212,6 +212,61 @@ namespace Connect4
                 CalculateUpperLeftDiagonalsScore(tokenColor);
         }
 
+        public int CalculateBlocScore(string p_ColorToConsider, int p_redCount, int p_YellowCount)
+        {
+            int result = 0;
+
+            if (((p_redCount > 0) && (p_YellowCount > 0)) || ((p_redCount == 0) && (p_YellowCount == 0)))
+            {
+                result = 0;
+            }
+            else
+            {
+                if (p_ColorToConsider.Equals("Red"))
+                {
+                    if (p_redCount == 4)
+                    {
+                        result = 10000;
+                        m_FourTokensAligned = true;
+                    }
+                    else
+                    {
+                        if (p_YellowCount == 4)
+                        {
+                            result = -10000;
+                            m_FourTokensAligned = true;
+                        }
+                        else
+                        {
+                            result = p_redCount > 0 ? (int)Math.Pow(10, p_redCount - 1) : -1 * (int)Math.Pow(10, p_YellowCount - 1);
+                        }
+                    }
+                }
+                else if (p_ColorToConsider.Equals("Yellow"))
+                {
+                    if (p_redCount == 4)
+                    {
+                        result = -10000;
+                        m_FourTokensAligned = true;
+                    }
+                    else
+                    {
+                        if (p_YellowCount == 4)
+                        {
+                            result = 10000;
+                            m_FourTokensAligned = true;
+                        }
+                        else
+                        {
+                            result = p_YellowCount > 0 ? (int)Math.Pow(10, p_YellowCount - 1) : -1 * (int)Math.Pow(10, p_redCount - 1);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Calculate the score for the board lines as follow :
         /// Each given line is divided in 4 sets of adjacent cells : [cell0, cell1, cell2, cell3],
@@ -232,8 +287,6 @@ namespace Connect4
 
             for (int i = 0; i < m_ArrayOfCells.GetLength(0); i++)
             {
-                int lineScore = 0;
-
                 for (int j = 0; j < m_ArrayOfCells.GetLength(1) - 3; j++)
                 {
                     int redCount = 0;
@@ -251,56 +304,7 @@ namespace Connect4
                         }
                     }
 
-                    if (((redCount > 0) && (yellowCount > 0)) || ((redCount == 0) && (yellowCount == 0)))
-                    {
-                        lineScore = 0;
-                    }
-                    else
-                    {
-                        if (p_ColorToConsider.Equals("Red"))
-                        {
-                            if (redCount == 4)
-                            {
-                                lineScore = 10000;
-                            }
-                            else
-                            {
-                                if (yellowCount == 4)
-                                {
-                                    lineScore = -10000;
-                                }
-                                else
-                                {
-                                    lineScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
-                                }
-                            }
-                        }
-                        else if (p_ColorToConsider.Equals("Yellow"))
-                        {
-                            if (redCount == 4)
-                            {
-                                lineScore = -10000;
-                            }
-                            else
-                            {
-                                if (yellowCount == 4)
-                                {
-                                    lineScore = 10000;
-                                }
-                                else
-                                {
-                                    lineScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
-                                }
-                            }
-                        }
-                    }
-
-                    if (lineScore == 1000 || lineScore == -1000)
-                    {
-                        m_FourTokensAligned = true;
-                    }
-
-                    linesScore += lineScore;
+                    linesScore += CalculateBlocScore(p_ColorToConsider, redCount, yellowCount);
                 }
             }
 
@@ -317,8 +321,6 @@ namespace Connect4
 
             for (int i = 0; i < m_ArrayOfCells.GetLength(1); i++)
             {
-                int columnScore = 0;
-
                 for (int j = 0; j < m_ArrayOfCells.GetLength(0) - 3; j++)
                 {
                     int redCount = 0;
@@ -336,56 +338,7 @@ namespace Connect4
                         }
                     }
 
-                    if (((redCount > 0) && (yellowCount > 0)) || ((redCount == 0) && (yellowCount == 0)))
-                    {
-                        columnScore = 0;
-                    }
-                    else
-                    {
-                        if (p_ColorToConsider.Equals("Red"))
-                        {
-                            if (redCount == 4)
-                            {
-                                columnScore = 10000;
-                            }
-                            else
-                            {
-                                if (yellowCount == 4)
-                                {
-                                    columnScore = -10000;
-                                }
-                                else
-                                {
-                                    columnScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
-                                }
-                            }
-                        }
-                        else if (p_ColorToConsider.Equals("Yellow"))
-                        {
-                            if (redCount == 4)
-                            {
-                                columnScore = -10000;
-                            }
-                            else
-                            {
-                                if (yellowCount == 4)
-                                {
-                                    columnScore = 10000;
-                                }
-                                else
-                                {
-                                    columnScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
-                                }
-                            }
-                        }
-                    }
-
-                    if (columnScore == 1000 || columnScore == -1000)
-                    {
-                        m_FourTokensAligned = true;
-                    }
-
-                    columnsScore += columnScore;
+                    columnsScore += CalculateBlocScore(p_ColorToConsider, redCount, yellowCount);
                 }
             }
 
@@ -402,8 +355,6 @@ namespace Connect4
 
             for (int i = 0; i < m_ArrayOfCells.GetLength(0) - 3; i++)
             {
-                int upperRightDiagonalScore = 0;
-
                 for (int j = 0; j < m_ArrayOfCells.GetLength(1) - 3; j++)
                 {
                     int redCount = 0;
@@ -421,56 +372,7 @@ namespace Connect4
                         }
                     }
 
-                    if (((redCount > 0) && (yellowCount > 0)) || ((redCount == 0) && (yellowCount == 0)))
-                    {
-                        upperRightDiagonalScore = 0;
-                    }
-                    else
-                    {
-                        if (p_ColorToConsider.Equals("Red"))
-                        {
-                            if (redCount == 4)
-                            {
-                                upperRightDiagonalScore = 10000;
-                            }
-                            else
-                            {
-                                if (yellowCount == 4)
-                                {
-                                    upperRightDiagonalScore = -10000;
-                                }
-                                else
-                                {
-                                    upperRightDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
-                                }
-                            }
-                        }
-                        else if (p_ColorToConsider.Equals("Yellow"))
-                        {
-                            if (redCount == 4)
-                            {
-                                upperRightDiagonalScore = -10000;
-                            }
-                            else
-                            {
-                                if (yellowCount == 4)
-                                {
-                                    upperRightDiagonalScore = 10000;
-                                }
-                                else
-                                {
-                                    upperRightDiagonalScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
-                                }
-                            }
-                        }
-                    }
-
-                    if (upperRightDiagonalScore == 1000 || upperRightDiagonalScore == -1000)
-                    {
-                        m_FourTokensAligned = true;
-                    }
-
-                    upperRightDiagonalsScore += upperRightDiagonalScore;
+                    upperRightDiagonalsScore += CalculateBlocScore(p_ColorToConsider, redCount, yellowCount);
                 }
             }
 
@@ -487,8 +389,6 @@ namespace Connect4
 
             for (int i = 3; i < m_ArrayOfCells.GetLength(0); i++)
             {
-                int upperLeftDiagonalScore = 0;
-
                 for (int j = 0; j < m_ArrayOfCells.GetLength(1) - 3; j++)
                 {
                     int redCount = 0;
@@ -506,61 +406,11 @@ namespace Connect4
                         }
                     }
 
-                    if (((redCount > 0) && (yellowCount > 0)) || ((redCount == 0) && (yellowCount == 0)))
-                    {
-                        upperLeftDiagonalScore = 0;
-                    }
-                    else
-                    {
-                        if (p_ColorToConsider.Equals("Red"))
-                        {
-                            if (redCount == 4)
-                            {
-                                upperLeftDiagonalScore = 10000;
-                            }
-                            else
-                            {
-                                if (yellowCount == 4)
-                                {
-                                    upperLeftDiagonalScore = -10000;
-                                }
-                                else
-                                {
-                                    upperLeftDiagonalScore = redCount > 0 ? (int)Math.Pow(10, redCount - 1) : -1 * (int)Math.Pow(10, yellowCount - 1);
-                                }
-                            }
-                        }
-                        else if (p_ColorToConsider.Equals("Yellow"))
-                        {
-                            if (redCount == 4)
-                            {
-                                upperLeftDiagonalScore = -10000;
-                            }
-                            else
-                            {
-                                if (yellowCount == 4)
-                                {
-                                    upperLeftDiagonalScore = 10000;
-                                }
-                                else
-                                {
-                                    upperLeftDiagonalScore = yellowCount > 0 ? (int)Math.Pow(10, yellowCount - 1) : -1 * (int)Math.Pow(10, redCount - 1);
-                                }
-                            }
-                        }
-                    }
-
-                    if (upperLeftDiagonalScore == 1000 || upperLeftDiagonalScore == -1000)
-                    {
-                        m_FourTokensAligned = true;
-                    }
-
-                    upperLeftDiagonalsScore += upperLeftDiagonalScore;
+                    upperLeftDiagonalsScore += CalculateBlocScore(p_ColorToConsider, redCount, yellowCount);
                 }
             }
 
             return upperLeftDiagonalsScore;
         }
-
     }
 }
