@@ -102,6 +102,10 @@ namespace Connect4
             {
                 return m_Score;
             }
+            set
+            {
+                m_Score = value;
+            }
         }
 
         /// <summary>

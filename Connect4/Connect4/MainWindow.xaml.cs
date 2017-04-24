@@ -123,15 +123,6 @@ namespace Connect4
         {
             try
             {
-                // We start at i = 1 because we leave one empty row to place our buttons.
-                /*  for (int i = m_MatrixOfCells.NumberOfLines; i >= 1; i--)
-                  {
-                      for (int j = 0; j < m_MatrixOfCells.NumberOfColumns; j++)
-                      {
-                          // Adds a Cell in the Connect4 Grid(i,j).
-                             Grid.SetRow(m_MatrixOfCells.ArrayOfCells[i - 1, j], i);
-                             Grid.SetColumn(m_MatrixOfCells.ArrayOfCells[i - 1, j], j);
-                             m_Connect4GUI.Children.Add(m_MatrixOfCells.ArrayOfCells[i - 1, j]);*/
                 for (int i = 1; i <= m_Connect4Game.MatrixOfCells.NumberOfLines; i++)
                 {
                     for (int j = 0; j < m_Connect4Game.MatrixOfCells.NumberOfColumns; j++)

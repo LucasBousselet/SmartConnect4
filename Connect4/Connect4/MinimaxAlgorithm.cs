@@ -23,20 +23,23 @@ namespace Connect4
                         GameGrid newGameGrid = p_Node.Grid.CloneGameGrid(p_Node.Grid);
                         newGameGrid.AddTokenInColumn(column, p_PlayerMaximisant.TokenColor);
                         Node newNode = new Node(p_PlayerMinimisant, newGameGrid, column, p_Node.Depth + 1);
+
                         Node currentNode = Minimax(newNode, p_Depth, p_Alpha, p_Beta, p_PlayerMaximisant, p_PlayerMinimisant);
+                        newNode.Grid.Score = currentNode.Grid.Score;
 
                         if (nodeWithScoreMax == null)
                         {
-                            nodeWithScoreMax = currentNode;
+                            nodeWithScoreMax = newNode;
                         }
                         else
                         {
-                            nodeWithScoreMax = currentNode.Grid.Score > nodeWithScoreMax.Grid.Score ? currentNode : nodeWithScoreMax;
-                            /*if (nodeWithScoreMax.Grid.Score > p_Beta)
+                            nodeWithScoreMax = currentNode.Grid.Score > nodeWithScoreMax.Grid.Score ? newNode : nodeWithScoreMax;
+
+                            if (nodeWithScoreMax.Grid.Score > p_Beta)
                             {
                                 return nodeWithScoreMax;
                             }
-                            p_Alpha = Math.Max(p_Alpha, nodeWithScoreMax.Grid.Score);*/
+                            p_Alpha = Math.Max(p_Alpha, nodeWithScoreMax.Grid.Score);
                         }
                     }
                     return nodeWithScoreMax;
@@ -51,7 +54,9 @@ namespace Connect4
                         GameGrid newGameGrid = p_Node.Grid.CloneGameGrid(p_Node.Grid);
                         newGameGrid.AddTokenInColumn(column, p_PlayerMinimisant.TokenColor);
                         Node newNode = new Node(p_PlayerMaximisant, newGameGrid, column, p_Node.Depth + 1);
+
                         Node currentNode = Minimax(newNode, p_Depth, p_Alpha, p_Beta, p_PlayerMaximisant, p_PlayerMinimisant);
+                        newNode.Grid.Score = currentNode.Grid.Score;
 
                         if (nodeWithScoreMin == null)
                         {
@@ -59,16 +64,13 @@ namespace Connect4
                         }
                         else
                         {
-                            nodeWithScoreMin = currentNode.Grid.Score > nodeWithScoreMin.Grid.Score ? currentNode : nodeWithScoreMin;
+                            nodeWithScoreMin = currentNode.Grid.Score < nodeWithScoreMin.Grid.Score ? newNode : nodeWithScoreMin;
 
-                            int a = 0;
-                            a++;
-
-                            /*if (p_Alpha > nodeWithScoreMin.Grid.Score)
+                            if (p_Alpha > nodeWithScoreMin.Grid.Score)
                             {
                                 return nodeWithScoreMin;
                             }
-                            p_Beta = Math.Min(p_Beta, nodeWithScoreMin.Grid.Score);*/
+                            p_Beta = Math.Min(p_Beta, nodeWithScoreMin.Grid.Score);
                         }
                     }
                     return nodeWithScoreMin;
