@@ -14,12 +14,12 @@ namespace Connect4
         /// <summary>
         /// Number of lines in the Connect4 game board.
         /// </summary>
-        private const int m_NumberOfColumns = 7;
+        private int m_NumberOfColumns = new int();
 
         /// <summary>
         /// Number of columns in the Connect4 game board.
         /// </summary>
-        private const int m_NumberOfLines = 6;
+        private int m_NumberOfLines = new int();
 
         /// <summary>
         /// Contains the 42 Cells (6 x 7) that compose the board.
@@ -44,8 +44,10 @@ namespace Connect4
         /// <summary>
         /// Create a new Gamegrid with 42 empty cells.
         /// </summary>
-        public GameGrid()
+        public GameGrid(int p_NumberOfLines, int p_NumberOfColumns)
         {
+            m_NumberOfLines = p_NumberOfLines;
+            m_NumberOfColumns = p_NumberOfColumns;
             m_Score = 0;
             m_FourTokensAligned = false;
             m_MatrixOfCells = new Cell[m_NumberOfLines, m_NumberOfColumns];
@@ -218,7 +220,7 @@ namespace Connect4
         /// <returns> The duplicate of the given board. </returns>
         public GameGrid CloneGameGrid(GameGrid p_GridToClone)
         {
-            GameGrid ClonedGrid = new GameGrid();
+            GameGrid ClonedGrid = new GameGrid(6, 7);
 
             for (int i = 0; i < m_NumberOfLines; i++)
             {

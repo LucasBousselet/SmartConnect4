@@ -21,7 +21,7 @@ namespace Connect4
         /// <summary>
         /// The game board.
         /// </summary>
-        private GameGrid m_GameGrid = new GameGrid();
+        private GameGrid m_GameGrid = new GameGrid(6, 7);
 
         /// <summary>
         /// Get the board game.
@@ -88,7 +88,7 @@ namespace Connect4
             if (!CheckIfWinner(m_Player1))
             {
                 m_Player2.Play(m_GameGrid);
-                
+
                 m_GameGrid.CalculateGridScore(m_Player2);
                 OnScoreCalculated(m_GameGrid.Score, MinimaxAlgorithm.ElapsedTime, MinimaxAlgorithm.IterationNumber);
                 CheckIfWinner(m_Player2);
