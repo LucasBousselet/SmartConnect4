@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Connect4
 {
@@ -13,6 +14,11 @@ namespace Connect4
         private static int m_IterationNumber = new int();
 
         /// <summary>
+        /// The running time of the algorithm.
+        /// </summary>
+        private static string m_RunningTime = string.Empty;
+
+        /// <summary>
         /// Get the number of iteration.
         /// </summary>
         public static int IterationNumber
@@ -20,6 +26,17 @@ namespace Connect4
             get
             {
                 return m_IterationNumber;
+            }
+        }
+
+        /// <summary>
+        /// Get the algorithm running time.
+        /// </summary>
+        public static string ElapsedTime
+        {
+            get
+            {
+                return m_RunningTime;
             }
         }
 
@@ -35,7 +52,15 @@ namespace Connect4
         {
             m_IterationNumber = 0;
             Node startingNode = new Node(p_MaximizingPlayer, p_GameGrid, -1, 0);
-            return Minimax(startingNode, p_MaxDepth, int.MinValue, int.MaxValue, p_MaximizingPlayer, p_MinimizingPlayer);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            Node result = Minimax(startingNode, p_MaxDepth, int.MinValue, int.MaxValue, p_MaximizingPlayer, p_MinimizingPlayer);
+            stopWatch.Stop();
+
+            m_RunningTime = string.Format("{0:0} s {1:00} ms", stopWatch.Elapsed.Seconds, stopWatch.Elapsed.Milliseconds);
+
+            return result;
         }
 
         /// <summary>

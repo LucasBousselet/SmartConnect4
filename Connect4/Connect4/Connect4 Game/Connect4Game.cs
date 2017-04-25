@@ -87,17 +87,10 @@ namespace Connect4
 
             if (!CheckIfWinner(m_Player1))
             {
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
                 m_Player2.Play(m_GameGrid);
-                stopWatch.Stop();
-
-                // Format and display the TimeSpan value.
-                string elapsedTime = string.Format("{0:0} s {1:00} ms",
-                    stopWatch.Elapsed.Seconds, stopWatch.Elapsed.Milliseconds);
-
+                
                 m_GameGrid.CalculateGridScore(m_Player2);
-                OnScoreCalculated(m_GameGrid.Score, elapsedTime, MinimaxAlgorithm.IterationNumber);
+                OnScoreCalculated(m_GameGrid.Score, MinimaxAlgorithm.ElapsedTime, MinimaxAlgorithm.IterationNumber);
                 CheckIfWinner(m_Player2);
             }
         }
