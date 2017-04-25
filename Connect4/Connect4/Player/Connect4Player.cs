@@ -9,10 +9,6 @@
         /// Give the player a token color.
         /// </summary>
         protected string m_TokenColor = string.Empty;
-        /// <summary>
-        /// True if the player has played is turn, false otherwise.
-        /// </summary>
-        protected bool m_HasPlayed = new bool();
 
         /// <summary>
         /// Get the token color for the player.
@@ -22,21 +18,6 @@
             get
             {
                 return m_TokenColor;
-            }
-        }
-
-        /// <summary>
-        /// Get / set if the Connect4Player has played is turn.
-        /// </summary>
-        public bool HasPlayed
-        {
-            get
-            {
-                return m_HasPlayed;
-            }
-            set
-            {
-                m_HasPlayed = value;
             }
         }
 
@@ -56,10 +37,13 @@
         /// <param name="p_ColumnPlayed"> The column he plays in. </param>
         public void Play(GameGrid p_GameGrid, int p_ColumnPlayed)
         {
-            p_GameGrid.AddTokenInColumn(p_ColumnPlayed, m_TokenColor);
-            HasPlayed = true;
+            p_GameGrid.PlayTokenInColumn(p_ColumnPlayed, m_TokenColor);
         }
 
+        /// <summary>
+        /// The Play function which will be implemented in the AIPlayer class.
+        /// </summary>
+        /// <param name="p_GameGrid"> The gamegrid to play in. </param>
         public virtual void Play(GameGrid p_GameGrid)
         {
 

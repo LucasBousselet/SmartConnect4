@@ -1,13 +1,9 @@
-﻿using System;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-
-namespace Connect4
+﻿namespace Connect4
 {
     /// <summary>
-    /// The game is composed of a number of cells that contain either a yellow token, a red one or nothing.
+    /// Create a new Connect4 cell.
     /// </summary>
-    partial class Cell : UserControl
+    sealed class Cell
     {
         /// <summary>
         /// True if the cell is occupied by a red token.
@@ -25,29 +21,43 @@ namespace Connect4
         private bool m_IsEmpty = new bool();
 
         /// <summary>
-        /// Default constructor for a cell.
+        /// Link a new CellUI.
         /// </summary>
-        public Cell()
+        private CellUI m_CellUI = null;
+
+        /// <summary>
+        /// Get the CellUI.
+        /// </summary>
+        public CellUI CellUI
         {
-            InitializeComponent();
+            get
+            {
+                return m_CellUI;
+            }
+        }
+
+        /// <summary>
+        /// Create a new cell with its CellUI.
+        /// </summary>
+        /// <param name="p_CellUI"> The linked CellUI. </param>
+        public Cell(CellUI p_CellUI)
+        {
             m_IsEmpty = true;
             m_IsRed = false;
             m_IsYellow = false;
+            m_CellUI = p_CellUI;
         }
 
         /// <summary>
         /// Constructor used to create the duplicate of a given cell.
         /// </summary>
-        /// <param name="ClonedCell"> The cell to duplicate. </param>
-        public Cell(Cell ClonedCell)
+        /// <param name="p_ClonedCell"> The cell to duplicate. </param>
+        public Cell(Cell p_ClonedCell)
         {
-            InitializeComponent();
-            m_IsEmpty = ClonedCell.m_IsEmpty;
-            m_IsRed = ClonedCell.m_IsRed;
-            m_IsYellow = ClonedCell.m_IsYellow;
+            m_IsEmpty = p_ClonedCell.m_IsEmpty;
+            m_IsRed = p_ClonedCell.m_IsRed;
+            m_IsYellow = p_ClonedCell.m_IsYellow;
         }
-
-        #region Getters / Setters
 
         /// <summary>
         /// Get / set if the cell contains a red token.
@@ -61,9 +71,11 @@ namespace Connect4
             set
             {
                 m_IsRed = value;
-                BitmapImage image = new BitmapImage(new Uri("Ressources/RedCell.png", UriKind.Relative));
-                cellImage.Source = image;
                 m_IsEmpty = !value;
+                if (m_CellUI != null)
+                {
+                    m_CellUI.ChangeImage("Red");
+                }
             }
         }
 
@@ -79,14 +91,16 @@ namespace Connect4
             set
             {
                 m_IsYellow = value;
-                BitmapImage image = new BitmapImage(new Uri("Ressources/YellowCell.png", UriKind.Relative));
-                cellImage.Source = image;
                 m_IsEmpty = !value;
+                if (m_CellUI != null)
+                {
+                    m_CellUI.ChangeImage("Yellow");
+                }
             }
         }
 
         /// <summary>
-        /// Get / set if the cell is empty.
+        /// Get if the cell is empty.
         /// </summary>
         public bool IsEmpty
         {
@@ -94,19 +108,7 @@ namespace Connect4
             {
                 return m_IsEmpty;
             }
-            set
-            {
-                m_IsEmpty = value;
-                if (value)
-                {
-                    m_IsRed = !value;
-                    BitmapImage image = new BitmapImage(new Uri("Ressources/EmptyCell.png", UriKind.Relative));
-                    cellImage.Source = image;
-                    m_IsYellow = !value;
-                }
-            }
         }
 
-        #endregion  
     }
 }

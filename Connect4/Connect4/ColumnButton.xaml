@@ -6,9 +6,10 @@
              xmlns:local="clr-namespace:Connect4"
              mc:Ignorable="d" 
              d:DesignHeight="80" d:DesignWidth="100">
-
-    <Button x:Name="button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="80" Click="button_Click">
+    <Viewbox Stretch="Uniform" >
+        <Button x:Name="button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="80" Click="button_Click">
         <Image Source="Ressources/PlayArrow.png"></Image>
     </Button>
+    </Viewbox>
 
 </UserControl>

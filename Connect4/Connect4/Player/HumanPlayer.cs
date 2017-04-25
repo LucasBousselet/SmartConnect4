@@ -3,7 +3,7 @@
     /// <summary>
     /// Class used to create a new human player.
     /// </summary>
-    class HumanPlayer : Connect4Player
+    sealed class HumanPlayer : Connect4Player
     {
         /// <summary>
         /// Create a new human player with his token color.

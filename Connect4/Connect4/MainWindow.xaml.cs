@@ -10,7 +10,7 @@ namespace Connect4
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml.
     /// </summary>
-    public partial class MainWindow : Window
+    public sealed partial class MainWindow : Window
     {
         /// <summary>
         /// Graphical grid that act as the connect4 structure, that will be displayed on the GUI.
@@ -24,6 +24,11 @@ namespace Connect4
         private Grid m_WindowGrid = new Grid();
 
         /// <summary>
+        /// The textbox to display the score calculated by the AI.
+        /// </summary>
+        private TextBox m_ScoreTextBox = new TextBox();
+
+        /// <summary>
         /// The MainWindow possesses this matrix of 42 cells, it is used to reach every
         /// cell we need, and each one is associated in a case of the GUI grid for display purpose.
         /// </summary>
@@ -33,7 +38,7 @@ namespace Connect4
         /// 7 buttons, one will be displayed above
         /// <summary> the each column.
         /// </summary>
-        private List<ColumnButton> ColumnButtonList = new List<ColumnButton>();
+        private List<ColumnButton> m_ColumnButtonList = new List<ColumnButton>();
 
         /// <summary>
         /// Create a new GameWindow.
@@ -41,16 +46,18 @@ namespace Connect4
         public MainWindow()
         {
             InitializeComponent();
+
+            // Initialize playing board.
             InitializeGameWindow();
 
-            PopulateConnect4WithColumnButtons();
-            PopulateConnect4GridWithCell();
-            Content = m_WindowGrid;
-
-            // Delegate for ColumnButton.onClick event.
-            //Connect4Player.OnColumnFull += new Connect4Player.dlgOnColumnFull(OnColumnFull);
-            ColumnButton.OnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
+            // Delegate for varios events.
+            GameGrid.OnColumnFull += new GameGrid.dlgOnColumnFull(OnColumnFull);
+            ColumnButton.OnColumnButtonClicked += new ColumnButton.dlgOnButtonClicked(OnColumnButtonClicked);
             Connect4Game.OnHumanPlayerPlayed += new Connect4Game.dlgOnHumanPlayerPlayed(UpdateGUI);
+            Connect4Game.OnWin += new Connect4Game.dlgOnWin(OnWin);
+            Connect4Game.OnScoreCalculated += new Connect4Game.dlgOnScoreCalculated(ModifyScoreTextBox);
+
+            Content = m_WindowGrid;
         }
 
         /// <summary>
@@ -62,14 +69,21 @@ namespace Connect4
         {
             // Creation of the rows and columns of the _WindowGrid.
             RowDefinition windowRow1 = new RowDefinition();
+            RowDefinition windowRow2 = new RowDefinition();
             windowRow1.Height = GridLength.Auto;
+            windowRow2.Height = new GridLength(50);
             m_WindowGrid.RowDefinitions.Add(windowRow1);
+            m_WindowGrid.RowDefinitions.Add(windowRow2);
             ColumnDefinition windowColumn1 = new ColumnDefinition();
-            ColumnDefinition WindowColumn2 = new ColumnDefinition();
             m_WindowGrid.ColumnDefinitions.Add(windowColumn1);
-            m_WindowGrid.ColumnDefinitions.Add(WindowColumn2);
 
             InitializeConnect4Grid();
+            AddScoreField();
+
+            // Populate the first line with ColumnButtons
+            PopulateConnect4WithColumnButtons();
+            // Populate the grid cell with Cells
+            PopulateConnect4GridWithCell();
         }
 
         /// <summary>
@@ -110,26 +124,46 @@ namespace Connect4
             m_Connect4GUI.ColumnDefinitions.Add(connect4Column7);
 
             // Sets Connect4 grid into the left _GameGrid cell. 
-            Grid.SetRow(m_Connect4GUI, 1);
+            Grid.SetRow(m_Connect4GUI, 0);
             Grid.SetColumn(m_Connect4GUI, 0);
             m_WindowGrid.Children.Add(m_Connect4GUI);
         }
 
         /// <summary>
-        /// Populates every cell of the Connect4 with a instance of Cell.
+        /// Add the m_ScoreBox to the GUI.
+        /// </summary>
+        private void AddScoreField()
+        {
+            ResetScoreBox();
+
+            Grid.SetRow(m_ScoreTextBox, 1);
+            Grid.SetColumn(m_ScoreTextBox, 0);
+            m_WindowGrid.Children.Add(m_ScoreTextBox);
+        }
+
+        /// <summary>
+        /// Reset the m_ScoreBox text.
+        /// </summary>
+        private void ResetScoreBox()
+        {
+            m_ScoreTextBox.Text = "\n  Current grid score for AI : 0";
+        }
+
+        /// <summary>
+        /// Populates every cell of the grid with a cell from the MatrixOfCells.
         /// Every cell is placed in a list, with a number ranging from 0 to 8   0 (first row 0 -> 8, second row 9 -> 17, etc.).
         /// </summary>
         private void PopulateConnect4GridWithCell()
         {
             try
             {
-                for (int i = 1; i <= m_Connect4Game.MatrixOfCells.NumberOfLines; i++)
+                for (int i = 1; i <= m_Connect4Game.Gamegrid.NumberOfLines; i++)
                 {
-                    for (int j = 0; j < m_Connect4Game.MatrixOfCells.NumberOfColumns; j++)
+                    for (int j = 0; j < m_Connect4Game.Gamegrid.NumberOfColumns; j++)
                     {
-                        Grid.SetRow(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j], m_Connect4Game.MatrixOfCells.NumberOfLines - i + 1);
-                        Grid.SetColumn(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j], j);
-                        m_Connect4GUI.Children.Add(m_Connect4Game.MatrixOfCells.ArrayOfCells[i - 1, j]);
+                        Grid.SetRow(m_Connect4Game.Gamegrid.MatriceOfCells[i - 1, j].CellUI, m_Connect4Game.Gamegrid.NumberOfLines - i + 1);
+                        Grid.SetColumn(m_Connect4Game.Gamegrid.MatriceOfCells[i - 1, j].CellUI, j);
+                        m_Connect4GUI.Children.Add(m_Connect4Game.Gamegrid.MatriceOfCells[i - 1, j].CellUI);
                     }
                 }
             }
@@ -147,11 +181,11 @@ namespace Connect4
         {
             try
             {
-                for (int i = 0; i < m_Connect4Game.MatrixOfCells.NumberOfColumns; i++)
+                for (int i = 0; i < m_Connect4Game.Gamegrid.NumberOfColumns; i++)
                 {
                     ColumnButton button = new ColumnButton();
                     button.ColumnIndex = i;
-                    ColumnButtonList.Add(button);
+                    m_ColumnButtonList.Add(button);
 
                     button.HorizontalAlignment = HorizontalAlignment.Center;
                     // Adds a ColumnButton in the row n°i of the Connect4 Grid.
@@ -167,18 +201,13 @@ namespace Connect4
             }
         }
 
-        public void UpdateGUI()
-        {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { })).Wait();
-        }
-
         /// <summary>
         /// Method used to enabe ou disable a ColumnButton.
         /// </summary>
         /// <param name="p_State"> The state of the button : true = enabled, false = disabled. </param>
         private void ColumnButtonEnabled(bool p_State)
         {
-            foreach (ColumnButton ColumnButton in ColumnButtonList)
+            foreach (ColumnButton ColumnButton in m_ColumnButtonList)
             {
                 ColumnButton.IsEnabled = p_State;
             }
@@ -187,31 +216,77 @@ namespace Connect4
         #region Events
 
         /// <summary>
+        /// Event triggered when a column is full to avoid anyone to play in it.
+        /// </summary>
+        /// <param name="p_ColumnIndex"> The index of the full column. </param>
+        private void OnColumnFull(int p_ColumnIndex)
+        {
+            for (int i = 0; i < m_ColumnButtonList.Count; i++)
+            {
+                if (m_ColumnButtonList[i].ColumnIndex == p_ColumnIndex)
+                {
+                    m_ColumnButtonList[i].IsEnabled = false;
+                    m_ColumnButtonList.Remove(m_ColumnButtonList[i]);
+                }
+            }
+        }
+
+        /// <summary>
         /// Event triggerend when we click on a ColumnButton.
         /// </summary>
         /// <param name="p_ColumnIndex"> The column index used to locate the ColumnButton. </param>
-        public void OnColumnButtonClicked(int p_ColumnIndex)
+        private void OnColumnButtonClicked(int p_ColumnIndex)
         {
-            // MessageBox.Show(p_ColumnIndex.ToString());
             ColumnButtonEnabled(false);
             m_Connect4Game.Connect4GameLoop(p_ColumnIndex);
             ColumnButtonEnabled(true);
         }
 
         /// <summary>
-        /// Event triggered when a column is full to avoid anyone to play in it.
+        /// Wait for the GUI to update before having the AI play.
         /// </summary>
-        /// <param name="p_ColumnIndex"> The index of the full column. </param>
-        public void OnColumnFull(int p_ColumnIndex)
+        private void UpdateGUI()
         {
-            for (int i = 0; i < ColumnButtonList.Count; i++)
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { })).Wait();
+        }
+
+        /// <summary>
+        /// Display a textbox when a player wins.
+        /// </summary>
+        /// <param name="p_Player"> The winner. </param>
+        private void OnWin(Connect4Player p_Player)
+        {
+            if (p_Player == null)
             {
-                if (ColumnButtonList[i].ColumnIndex == p_ColumnIndex)
+                MessageBox.Show("Looks like we have a draw gentlemen !");
+            }
+            else
+            {
+                if (p_Player is HumanPlayer)
                 {
-                    ColumnButtonList[i].IsEnabled = false;
-                    ColumnButtonList.Remove(ColumnButtonList[i]);
+                    MessageBox.Show("You won this game, congratulations !");
+                }
+                else
+                {
+                    MessageBox.Show("Seems like you lost this game, want to retry ?");
                 }
             }
+
+            m_Connect4Game = new Connect4Game();
+            m_ColumnButtonList.Clear();
+            PopulateConnect4WithColumnButtons();
+            PopulateConnect4GridWithCell();
+            ResetScoreBox();
+        }
+
+        /// <summary>
+        /// Update the m_ScoreBox text.
+        /// </summary>
+        /// <param name="p_Score"> The new score for the grid. </param>
+        /// <param name="p_Time"> The execution time. </param>
+        private void ModifyScoreTextBox(int p_Score, string p_Time, int p_IterationNumber)
+        {
+            m_ScoreTextBox.Text = "\n  Current grid score for AI : " + p_Score.ToString() + " / Calculation time : " + p_Time + " for " + p_IterationNumber + " iterations";
         }
 
         #endregion

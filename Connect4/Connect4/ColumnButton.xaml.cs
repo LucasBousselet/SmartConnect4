@@ -6,7 +6,7 @@ namespace Connect4
     /// <summary>
     /// Interaction logic for ColumnButton.xaml
     /// </summary>
-    partial class ColumnButton : UserControl
+    sealed partial class ColumnButton : UserControl
     {
         /// <summary>
         /// Column index of the ColumnButton to know its location.
@@ -36,7 +36,7 @@ namespace Connect4
         /// <summary>
         /// Function that throws the delegate.
         /// </summary>
-        public static dlgOnButtonClicked OnButtonClicked;
+        public static dlgOnButtonClicked OnColumnButtonClicked;
 
         /// <summary>
         /// Create a new ColumnButton.
@@ -53,7 +53,7 @@ namespace Connect4
         /// <param name="e"></param>
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            OnButtonClicked(m_ColumnIndex);
+            OnColumnButtonClicked(m_ColumnIndex);
         }
     }
 }
