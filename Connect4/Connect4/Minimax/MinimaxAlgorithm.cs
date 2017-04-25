@@ -91,36 +91,47 @@ namespace Connect4
                     foreach (int column in p_Node.Grid.ColumnNotFull)
                     {
                         GameGrid newGameGrid = p_Node.Grid.CloneGameGrid(p_Node.Grid);
-
                         newGameGrid.AddTokenInColumn(column, p_MaximizingPlayer.TokenColor);
-
                         Node newNode = new Node(p_MinimizingPlayer, newGameGrid, column, p_Node.Depth + 1);
-                        Node currentNode = Minimax(newNode, p_MaxDepth, p_Alpha, p_Beta, p_MaximizingPlayer, p_MinimizingPlayer);
 
-                        if (currentNode == null)
+                        if (p_Node.Depth == 1)
                         {
-                            nodeWithScoreMax = newNode;
+                            newGameGrid.CalculateGridScore(p_MaximizingPlayer);
+                            if (newGameGrid.FourTokenAligned)
+                            {
+                                nodeWithScoreMax = newNode;
+                                return nodeWithScoreMax;
+                            }
                         }
                         else
                         {
-                            newNode.Grid.Score = currentNode.Grid.Score;
+                            Node currentNode = Minimax(newNode, p_MaxDepth, p_Alpha, p_Beta, p_MaximizingPlayer, p_MinimizingPlayer);
 
-                            if (nodeWithScoreMax == null)
+                            if (currentNode == null)
                             {
                                 nodeWithScoreMax = newNode;
                             }
                             else
                             {
-                                nodeWithScoreMax = currentNode.Grid.Score > nodeWithScoreMax.Grid.Score ? newNode : nodeWithScoreMax;
+                                newNode.Grid.Score = currentNode.Grid.Score;
 
-                                if (nodeWithScoreMax.Grid.Score > p_Beta)
+                                if (nodeWithScoreMax == null)
                                 {
-                                    return nodeWithScoreMax;
+                                    nodeWithScoreMax = newNode;
                                 }
-                                p_Alpha = Math.Max(p_Alpha, nodeWithScoreMax.Grid.Score);
+                                else
+                                {
+                                    nodeWithScoreMax = currentNode.Grid.Score > nodeWithScoreMax.Grid.Score ? newNode : nodeWithScoreMax;
+
+                                    if (nodeWithScoreMax.Grid.Score > p_Beta)
+                                    {
+                                        return nodeWithScoreMax;
+                                    }
+                                    p_Alpha = Math.Max(p_Alpha, nodeWithScoreMax.Grid.Score);
+                                }
+
+
                             }
-
-
                         }
                     }
                     return nodeWithScoreMax;
