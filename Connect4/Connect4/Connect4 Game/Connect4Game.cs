@@ -60,7 +60,7 @@ namespace Connect4
         /// <param name="p_Score"> The score. </param>
         /// <param name="p_Time"> Minimax duration. </param>
         /// <param name="p_Iteration"> Minimax iteration. </param>
-        public delegate void dlgOnScoreCalculated(int p_Score, string p_Time, int p_Iteration);
+        public delegate void dlgOnScoreCalculated(int p_Score, string p_Time, string p_Iteration);
         /// <summary>
         /// The function throwing the delegate.
         /// </summary>
@@ -83,14 +83,14 @@ namespace Connect4
         {
             m_Player1.Play(m_GameGrid, p_ColumnIndex);
             OnHumanPlayerPlayed();
-            m_GameGrid.CalculateGridScore(m_Player1);
+            m_GameGrid.CalculateGridScore(m_Player1.TokenColor);
 
             if (!CheckIfWinner(m_Player1))
             {
-                m_Player2.Play(m_GameGrid);
+                string[] CalculationStats = m_Player2.Play(m_GameGrid);
 
-                m_GameGrid.CalculateGridScore(m_Player2);
-                OnScoreCalculated(m_GameGrid.Score, MinimaxAlgorithm.ElapsedTime, MinimaxAlgorithm.IterationNumber);
+                m_GameGrid.CalculateGridScore(m_Player2.TokenColor);
+                OnScoreCalculated(m_GameGrid.Score, CalculationStats[0], CalculationStats[1]);
                 CheckIfWinner(m_Player2);
             }
         }

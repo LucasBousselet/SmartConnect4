@@ -47,8 +47,8 @@ namespace Connect4
         /// <param name="p_MaxDepth"> The maximum depth for Minimax. </param>
         /// <param name="p_MaximizingPlayer"> The maximizing player. </param>
         /// <param name="p_MinimizingPlayer"> The minimizing player. </param>
-        /// <returns> The node with the column to play in. </returns>
-        public static Node Run(GameGrid p_GameGrid, int p_MaxDepth, Connect4Player p_MaximizingPlayer, Connect4Player p_MinimizingPlayer)
+        /// <returns> The column to play in. </returns>
+        public static int GetInWhichColumnPlay(GameGrid p_GameGrid, int p_MaxDepth, Connect4Player p_MaximizingPlayer, Connect4Player p_MinimizingPlayer)
         {
             m_IterationNumber = 0;
             Node startingNode = new Node(p_MaximizingPlayer, p_GameGrid, -1, 0);
@@ -60,7 +60,7 @@ namespace Connect4
 
             m_RunningTime = string.Format("{0:0} s {1:00} ms", stopWatch.Elapsed.Seconds, stopWatch.Elapsed.Milliseconds);
 
-            return result;
+            return result.TokenAddedInColumn;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Connect4
         {
             if (p_Node.Grid.FourTokenAligned || p_Node.Depth == p_MaxDepth)
             {
-                p_Node.Grid.CalculateGridScore(p_MaximizingPlayer);
+                p_Node.Grid.CalculateGridScore(p_MaximizingPlayer.TokenColor);
                 m_IterationNumber++;
                 return p_Node;
             }
@@ -94,14 +94,14 @@ namespace Connect4
                         newGameGrid.AddTokenInColumn(column, p_MaximizingPlayer.TokenColor);
                         Node newNode = new Node(p_MinimizingPlayer, newGameGrid, column, p_Node.Depth + 1);
 
-                        if (p_Node.Depth == 1)
+                        if (p_Node.Depth == 0)
                         {
-                            newGameGrid.CalculateGridScore(p_MaximizingPlayer);
-                            if (newGameGrid.FourTokenAligned)
-                            {
-                                nodeWithScoreMax = newNode;
-                                return nodeWithScoreMax;
-                            }
+                            newGameGrid.CalculateGridScore(p_MaximizingPlayer.TokenColor);
+                        }
+
+                        if (p_Node.Depth == 0 && newGameGrid.FourTokenAligned)
+                        {
+                            return newNode;
                         }
                         else
                         {

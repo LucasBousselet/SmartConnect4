@@ -44,9 +44,9 @@
         /// The Play function which will be implemented in the AIPlayer class.
         /// </summary>
         /// <param name="p_GameGrid"> The gamegrid to play in. </param>
-        public virtual void Play(GameGrid p_GameGrid)
+        public virtual string[] Play(GameGrid p_GameGrid)
         {
-
+            return null;
         }
     }
 }

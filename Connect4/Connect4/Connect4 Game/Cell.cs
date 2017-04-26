@@ -39,13 +39,12 @@
         /// <summary>
         /// Create a new cell with its CellUI.
         /// </summary>
-        /// <param name="p_CellUI"> The linked CellUI. </param>
-        public Cell(CellUI p_CellUI)
+        public Cell()
         {
             m_IsEmpty = true;
             m_IsRed = false;
             m_IsYellow = false;
-            m_CellUI = p_CellUI;
+            m_CellUI = new CellUI();
         }
 
         /// <summary>

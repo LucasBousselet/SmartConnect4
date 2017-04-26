@@ -56,7 +56,7 @@ namespace Connect4
             Connect4Game.OnHumanPlayerPlayed += new Connect4Game.dlgOnHumanPlayerPlayed(UpdateGUI);
             Connect4Game.OnWin += new Connect4Game.dlgOnWin(OnWin);
             Connect4Game.OnScoreCalculated += new Connect4Game.dlgOnScoreCalculated(ModifyScoreTextBox);
-
+            
             Content = m_WindowGrid;
         }
 
@@ -77,19 +77,16 @@ namespace Connect4
             ColumnDefinition windowColumn1 = new ColumnDefinition();
             m_WindowGrid.ColumnDefinitions.Add(windowColumn1);
 
-            InitializeConnect4Grid();
-            AddScoreField();
+            InitializeConnect4Board();
+            FillConnect4Board();
 
-            // Populate the first line with ColumnButtons
-            PopulateConnect4WithColumnButtons();
-            // Populate the grid cell with Cells
-            PopulateConnect4GridWithCell();
+            AddScoreField();
         }
 
         /// <summary>
         /// Initialize the graphical grid that will contain the 42 game cells and the 7 ColumnButtons.
         /// </summary>
-        private void InitializeConnect4Grid()
+        private void InitializeConnect4Board()
         {
             // Creates the 7 rows of the connect 4, and adds them to the grid.
             // The first row will hold the 7 buttons used to play a token in a given column.
@@ -129,13 +126,21 @@ namespace Connect4
             m_WindowGrid.Children.Add(m_Connect4GUI);
         }
 
+        private void FillConnect4Board()
+        {
+            m_ColumnButtonList.Clear();
+            ResetScoreBox();
+            // Populate the first line with ColumnButtons
+            PopulateConnect4WithColumnButtons();
+            // Populate the grid cell with Cells
+            PopulateConnect4GridWithCell();
+        }
+
         /// <summary>
         /// Add the m_ScoreBox to the GUI.
         /// </summary>
         private void AddScoreField()
         {
-            ResetScoreBox();
-
             Grid.SetRow(m_ScoreTextBox, 1);
             Grid.SetColumn(m_ScoreTextBox, 0);
             m_WindowGrid.Children.Add(m_ScoreTextBox);
@@ -273,10 +278,7 @@ namespace Connect4
             }
 
             m_Connect4Game = new Connect4Game();
-            m_ColumnButtonList.Clear();
-            PopulateConnect4WithColumnButtons();
-            PopulateConnect4GridWithCell();
-            ResetScoreBox();
+            FillConnect4Board();
         }
 
         /// <summary>
@@ -284,7 +286,8 @@ namespace Connect4
         /// </summary>
         /// <param name="p_Score"> The new score for the grid. </param>
         /// <param name="p_Time"> The execution time. </param>
-        private void ModifyScoreTextBox(int p_Score, string p_Time, int p_IterationNumber)
+        /// <param name="p_IterationNumber"> The number of iterations. </param>
+        private void ModifyScoreTextBox(int p_Score, string p_Time, string p_IterationNumber)
         {
             m_ScoreTextBox.Text = "\n  Current grid score for AI : " + p_Score.ToString() + " / Calculation time : " + p_Time + " for " + p_IterationNumber + " iterations";
         }

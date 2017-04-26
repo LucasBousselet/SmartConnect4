@@ -64,7 +64,7 @@ namespace Connect4
             {
                 for (int j = 0; j < m_NumberOfColumns; j++)
                 {
-                    m_MatrixOfCells[i, j] = new Cell(new CellUI());
+                    m_MatrixOfCells[i, j] = new Cell();
                 }
             }
         }
@@ -220,7 +220,7 @@ namespace Connect4
         /// <returns> The duplicate of the given board. </returns>
         public GameGrid CloneGameGrid(GameGrid p_GridToClone)
         {
-            GameGrid ClonedGrid = new GameGrid(6, 7);
+            GameGrid ClonedGrid = new GameGrid(p_GridToClone.m_NumberOfLines, p_GridToClone.m_NumberOfColumns);
 
             for (int i = 0; i < m_NumberOfLines; i++)
             {
@@ -241,15 +241,13 @@ namespace Connect4
         /// <summary>
         /// Calculate the score for a given player.
         /// </summary>
-        /// <param name="p_PlayerToConsider"> The player to consider. </param>
-        public void CalculateGridScore(Connect4Player p_PlayerToConsider)
+        /// <param name="p_tokenColor"> The token color to consider. </param>
+        public void CalculateGridScore(string p_tokenColor)
         {
-            string tokenColor = p_PlayerToConsider.TokenColor;
-
-            m_Score = CalculateLinesScore(tokenColor) +
-                CalculateColumnsScore(tokenColor) +
-                CalculateUpperRightDiagonalsScore(tokenColor) +
-                CalculateUpperLeftDiagonalsScore(tokenColor);
+            m_Score = CalculateLinesScore(p_tokenColor) +
+                CalculateColumnsScore(p_tokenColor) +
+                CalculateUpperRightDiagonalsScore(p_tokenColor) +
+                CalculateUpperLeftDiagonalsScore(p_tokenColor);
         }
 
         /// <summary>
@@ -287,7 +285,7 @@ namespace Connect4
                     {
                         if (p_YellowCount == 4)
                         {
-                            result = -10000;
+                            result = -100000;
                             m_FourTokensAligned = true;
                         }
                         else
@@ -300,7 +298,7 @@ namespace Connect4
                 {
                     if (p_RedCount == 4)
                     {
-                        result = -10000;
+                        result = -100000;
                         m_FourTokensAligned = true;
                     }
                     else

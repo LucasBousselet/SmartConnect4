@@ -16,9 +16,11 @@
         private Connect4Player m_Opponent = null;
 
         /// <summary>
-        /// Create a new AI player with his token color.
+        /// Create a new AI player with his token color, his opponent and his minimax depth.
         /// </summary>
-        /// <param name="p_TokenColor"> The color of the token for the player. </param>
+        /// <param name="p_TokenColor"> The color of the AIPlayer's token. </param>
+        /// <param name="p_Opponent"> The opponent a.k.a. minimizing player. </param>
+        /// <param name="p_DepthMinimax"> The depth for minimax. </param>
         public AIPlayer(string p_TokenColor, Connect4Player p_Opponent, int p_DepthMinimax) : base(p_TokenColor)
         {
             m_Opponent = p_Opponent;
@@ -30,10 +32,11 @@
         /// Run the Minimax algorithm with alpha-beta prunning to determine in which column we play.
         /// </summary>
         /// <param name="p_GameGrid"> The grid to consider. </param>
-        public override void Play(GameGrid p_GameGrid)
+        /// <returns> The calculation details (time and number of iterations) </returns>
+        public override string[] Play(GameGrid p_GameGrid)
         {
-            Node nodeToPlay = MinimaxAlgorithm.Run(p_GameGrid, m_MaxDepth, this, m_Opponent);
-            Play(p_GameGrid, nodeToPlay.TokenAddedInColumn);
+            Play(p_GameGrid, MinimaxAlgorithm.GetInWhichColumnPlay(p_GameGrid, m_MaxDepth, this, m_Opponent));
+            return new string[2] { MinimaxAlgorithm.ElapsedTime, MinimaxAlgorithm.IterationNumber.ToString() };
         }
 
     }
