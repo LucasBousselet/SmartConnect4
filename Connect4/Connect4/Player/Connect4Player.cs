@@ -11,6 +11,11 @@
         protected string m_TokenColor = string.Empty;
 
         /// <summary>
+        /// The player score, i.e. the number of games he won.
+        /// </summary>
+        protected int m_score = new int();
+
+        /// <summary>
         /// Get the token color for the player.
         /// </summary>
         public string TokenColor
@@ -18,6 +23,21 @@
             get
             {
                 return m_TokenColor;
+            }
+        }
+
+        /// <summary>
+        /// Get the player score.
+        /// </summary>
+        public int Score
+        {
+            get
+            {
+                return m_score;
+            }
+            set
+            {
+                m_score = value;
             }
         }
 

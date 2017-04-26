@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -56,7 +55,7 @@ namespace Connect4
             Connect4Game.OnHumanPlayerPlayed += new Connect4Game.dlgOnHumanPlayerPlayed(UpdateGUI);
             Connect4Game.OnWin += new Connect4Game.dlgOnWin(OnWin);
             Connect4Game.OnScoreCalculated += new Connect4Game.dlgOnScoreCalculated(ModifyScoreTextBox);
-            
+
             Content = m_WindowGrid;
         }
 
@@ -71,7 +70,7 @@ namespace Connect4
             RowDefinition windowRow1 = new RowDefinition();
             RowDefinition windowRow2 = new RowDefinition();
             windowRow1.Height = GridLength.Auto;
-            windowRow2.Height = new GridLength(50);
+            windowRow2.Height = new GridLength(35);
             m_WindowGrid.RowDefinitions.Add(windowRow1);
             m_WindowGrid.RowDefinitions.Add(windowRow2);
             ColumnDefinition windowColumn1 = new ColumnDefinition();
@@ -151,7 +150,8 @@ namespace Connect4
         /// </summary>
         private void ResetScoreBox()
         {
-            m_ScoreTextBox.Text = "\n  Current grid score for AI : 0";
+            m_ScoreTextBox.Text = "Player score: " + m_Connect4Game.GetPlayersScore()[0] + " / AI score: " + m_Connect4Game.GetPlayersScore()[1]
+                + "\nCurrent grid score for AI : 0";
         }
 
         /// <summary>
@@ -160,22 +160,14 @@ namespace Connect4
         /// </summary>
         private void PopulateConnect4GridWithCell()
         {
-            try
+            for (int i = 1; i <= m_Connect4Game.Gamegrid.NumberOfLines; i++)
             {
-                for (int i = 1; i <= m_Connect4Game.Gamegrid.NumberOfLines; i++)
+                for (int j = 0; j < m_Connect4Game.Gamegrid.NumberOfColumns; j++)
                 {
-                    for (int j = 0; j < m_Connect4Game.Gamegrid.NumberOfColumns; j++)
-                    {
-                        Grid.SetRow(m_Connect4Game.Gamegrid.MatriceOfCells[i - 1, j].CellUI, m_Connect4Game.Gamegrid.NumberOfLines - i + 1);
-                        Grid.SetColumn(m_Connect4Game.Gamegrid.MatriceOfCells[i - 1, j].CellUI, j);
-                        m_Connect4GUI.Children.Add(m_Connect4Game.Gamegrid.MatriceOfCells[i - 1, j].CellUI);
-                    }
+                    Grid.SetRow(m_Connect4Game.Gamegrid.MatriceOfCells[i - 1, j].CellUI, m_Connect4Game.Gamegrid.NumberOfLines - i + 1);
+                    Grid.SetColumn(m_Connect4Game.Gamegrid.MatriceOfCells[i - 1, j].CellUI, j);
+                    m_Connect4GUI.Children.Add(m_Connect4Game.Gamegrid.MatriceOfCells[i - 1, j].CellUI);
                 }
-            }
-            catch (Exception ex)
-            {
-                Trace.Write(ex.Message);
-                throw;
             }
         }
 
@@ -184,25 +176,17 @@ namespace Connect4
         /// </summary>
         private void PopulateConnect4WithColumnButtons()
         {
-            try
+            for (int i = 0; i < m_Connect4Game.Gamegrid.NumberOfColumns; i++)
             {
-                for (int i = 0; i < m_Connect4Game.Gamegrid.NumberOfColumns; i++)
-                {
-                    ColumnButton button = new ColumnButton();
-                    button.ColumnIndex = i;
-                    m_ColumnButtonList.Add(button);
+                ColumnButton button = new ColumnButton();
+                button.ColumnIndex = i;
+                m_ColumnButtonList.Add(button);
 
-                    button.HorizontalAlignment = HorizontalAlignment.Center;
-                    // Adds a ColumnButton in the row n°i of the Connect4 Grid.
-                    Grid.SetRow(button, 0);
-                    Grid.SetColumn(button, i);
-                    m_Connect4GUI.Children.Add(button);
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.Write(ex.Message);
-                throw;
+                button.HorizontalAlignment = HorizontalAlignment.Center;
+                // Adds a ColumnButton in the row n°i of the Connect4 Grid.
+                Grid.SetRow(button, 0);
+                Grid.SetColumn(button, i);
+                m_Connect4GUI.Children.Add(button);
             }
         }
 
@@ -277,7 +261,7 @@ namespace Connect4
                 }
             }
 
-            m_Connect4Game = new Connect4Game();
+            m_Connect4Game.ResetGameBoard();
             FillConnect4Board();
         }
 
@@ -289,7 +273,8 @@ namespace Connect4
         /// <param name="p_IterationNumber"> The number of iterations. </param>
         private void ModifyScoreTextBox(int p_Score, string p_Time, string p_IterationNumber)
         {
-            m_ScoreTextBox.Text = "\n  Current grid score for AI : " + p_Score.ToString() + " / Calculation time : " + p_Time + " for " + p_IterationNumber + " iterations";
+            m_ScoreTextBox.Text = "Player score : " + m_Connect4Game.GetPlayersScore()[0] + " / AI score : " + m_Connect4Game.GetPlayersScore()[1]
+                + "\nCurrent grid score for AI : " + p_Score.ToString() + " / Calculation time : " + p_Time + " for " + p_IterationNumber + " iterations";
         }
 
         #endregion

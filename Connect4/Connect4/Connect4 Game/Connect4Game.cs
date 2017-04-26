@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Connect4
 {
@@ -42,6 +41,17 @@ namespace Connect4
             m_Player1 = new HumanPlayer("Yellow");
             m_Player2 = new AIPlayer("Red", m_Player1, 6);
             m_GameGrid.FillGameGridWithEmptyCells();
+        }
+
+        public void ResetGameBoard()
+        {
+            m_GameGrid = new GameGrid(6, 7);
+            m_GameGrid.FillGameGridWithEmptyCells();
+        }
+
+        public int[] GetPlayersScore()
+        {
+            return new int[2] { m_Player1.Score, m_Player2.Score };
         }
 
         /// <summary>
@@ -104,6 +114,7 @@ namespace Connect4
         {
             if (m_GameGrid.FourTokenAligned)
             {
+                p_PlayerToConsider.Score++;
                 OnWin(p_PlayerToConsider);
                 return true;
             }
