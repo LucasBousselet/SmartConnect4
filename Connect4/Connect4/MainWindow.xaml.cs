@@ -31,11 +31,10 @@ namespace Connect4
         /// The MainWindow possesses this matrix of 42 cells, it is used to reach every
         /// cell we need, and each one is associated in a case of the GUI grid for display purpose.
         /// </summary>
-        private Connect4Game m_Connect4Game = new Connect4Game();
+        private Connect4Game m_Connect4Game = null;
 
         /// In order to select a column in which we should insert a token, this list contains
-        /// 7 buttons, one will be displayed above
-        /// <summary> the each column.
+        /// 7 buttons, one will be displayed above each column.
         /// </summary>
         private List<ColumnButton> m_ColumnButtonList = new List<ColumnButton>();
 
@@ -45,6 +44,9 @@ namespace Connect4
         public MainWindow()
         {
             InitializeComponent();
+
+            // Create a new Connect4Game.
+            m_Connect4Game = new Connect4Game(6, 7, 6);
 
             // Initialize playing board.
             InitializeGameWindow();

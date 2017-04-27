@@ -10,17 +10,17 @@ namespace Connect4
         /// <summary>
         /// The first player.
         /// </summary>
-        private Connect4Player m_Player1;
+        private Connect4Player m_Player1 = null;
 
         /// <summary>
         /// The second player.
         /// </summary>
-        private Connect4Player m_Player2;
+        private Connect4Player m_Player2 = null;
 
         /// <summary>
         /// The game board.
         /// </summary>
-        private GameGrid m_GameGrid = new GameGrid(6, 7);
+        private GameGrid m_GameGrid = null;
 
         /// <summary>
         /// Get the board game.
@@ -36,10 +36,11 @@ namespace Connect4
         /// <summary>
         /// Create a new Connect4Game.
         /// </summary>
-        public Connect4Game()
+        public Connect4Game(int p_NbLignes, int p_NbColonnes, int p_AIDepth)
         {
+            m_GameGrid = new GameGrid(p_NbLignes, p_NbColonnes);
             m_Player1 = new HumanPlayer("Yellow");
-            m_Player2 = new AIPlayer("Red", m_Player1, 6);
+            m_Player2 = new AIPlayer("Red", m_Player1, p_AIDepth);
             m_GameGrid.FillGameGridWithEmptyCells();
         }
 

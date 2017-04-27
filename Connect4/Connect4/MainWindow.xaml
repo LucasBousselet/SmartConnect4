@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Connect4"
         mc:Ignorable="d"
-        Title="Connect4 Game with Minimax algorithm" Height="935" Width="900"
+        Title="Connect4 Game with Minimax algorithm - Lucas BOUSSELET et Nicolas GILBERT" Height="935" Width="900"
         WindowStartupLocation="CenterScreen">
 </Window>
